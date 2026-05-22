@@ -1,0 +1,99 @@
+{
+  "mutations": [
+    {
+      "patch": {
+        "id": "cat-previdencia",
+        "set": {
+          "name": "Previdência",
+          "description": "PGBL, VGBL, estratégias de acumulação."
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "cat-renda-fixa",
+        "set": {
+          "name": "Renda Fixa",
+          "description": "CDB, debêntures, isentos, títulos públicos."
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "cat-juros",
+        "set": {
+          "name": "Juros",
+          "description": "Política monetária, Selic, curva de juros."
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "cat-sucessao",
+        "set": {
+          "name": "Sucessão",
+          "description": "Holding, doação em vida, planejamento sucessório."
+        }
+      }
+    },
+    {
+      "patch": {
+        "id": "art-pgbl-vgbl",
+        "set": {
+          "title": "Previdência privada não é produto — é estrutura",
+          "excerpt": "Por que tratar PGBL e VGBL como veículos de planejamento muda completamente a decisão de aporte e a sucessão.",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "s1",
+                  "text": "Quando o cliente trata previdência como mais um produto, ele otimiza pela rentabilidade de curto prazo. Quando trata como estrutura, otimiza pela arquitetura: tributação no resgate, sucessão sem inventário, regime de aporte ao longo da vida ativa."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "s2",
+                  "text": "PGBL vs VGBL: o critério"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "s3",
+                  "text": "PGBL faz sentido quando o cliente declara imposto pelo modelo completo e quer reduzir base de cálculo. VGBL é o veículo padrão de acumulação para quem usa declaração simplificada ou já maximizou o limite do PGBL."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b4",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "s4",
+                  "text": "A diferença entre o cliente que entendeu a previdência como produto e o que entendeu como estrutura aparece dez, quinze anos depois — quando chega a hora de resgatar e a sucessão começa a importar mais que a rentabilidade do ano."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

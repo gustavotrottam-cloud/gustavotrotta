@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-rule: rgba(20, 20, 23, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11", "cv03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #0F1E3A;
+  color: #FAFAF7;
+}
+
+/* Editorial rule line used across sections */
+.rule-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(20, 20, 23, 0.18), transparent);
+}
+
+/* Subtle grain overlay for premium texture */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Number/eyebrow chip used to label sections */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6B6B70;
+}
+
+/* Editorial drop-cap for opening paragraphs */
+.dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  line-height: 0.9;
+  float: left;
+  padding: 0.2rem 0.6rem 0 0;
+  color: #0A0A0B;
+  font-weight: 500;
+}

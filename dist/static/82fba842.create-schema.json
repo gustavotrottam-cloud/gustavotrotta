@@ -1,0 +1,684 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Nome"
+      },
+      {
+        "options": {
+          "source": "name"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Cenário & Mercado",
+              "value": "mercado"
+            },
+            {
+              "title": "Biblioteca",
+              "value": "biblioteca"
+            },
+            {
+              "title": "Ambos",
+              "value": "ambos"
+            }
+          ],
+          "layout": "radio"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "mercado",
+                  "biblioteca",
+                  "ambos"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Onde a categoria aparece na navegação do site",
+        "name": "area",
+        "type": "string",
+        "title": "Área"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text",
+        "title": "Descrição"
+      },
+      {
+        "initialValue": 100,
+        "name": "displayOrder",
+        "type": "number",
+        "title": "Ordem de exibição"
+      }
+    ],
+    "name": "category",
+    "type": "document",
+    "title": "Categoria"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Título"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 320
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Aparece nos cards e na pré-leitura.",
+        "name": "excerpt",
+        "type": "text",
+        "title": "Resumo (1-2 linhas)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference",
+        "title": "Categoria"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Texto alternativo (acessibilidade)"
+          }
+        ],
+        "name": "heroImage",
+        "type": "image",
+        "title": "Imagem de destaque"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Negrito"
+                },
+                {
+                  "value": "em",
+                  "title": "Itálico"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Parágrafo"
+              },
+              {
+                "value": "h2",
+                "title": "Subtítulo 2"
+              },
+              {
+                "value": "h3",
+                "title": "Subtítulo 3"
+              },
+              {
+                "value": "blockquote",
+                "title": "Citação"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Conteúdo"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "name": "readingTimeMin",
+        "type": "number",
+        "title": "Tempo de leitura (min)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "Publicado em"
+      },
+      {
+        "initialValue": false,
+        "description": "Ative para liberar campos estruturados (resumo executivo, insights, por que importa).",
+        "name": "isResearch",
+        "type": "boolean",
+        "title": "É um relatório de research?"
+      },
+      {
+        "rows": 4,
+        "hidden": "conditional",
+        "name": "executiveSummary",
+        "type": "text",
+        "title": "Resumo executivo"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "keyInsights",
+        "type": "array",
+        "title": "Principais insights"
+      },
+      {
+        "rows": 3,
+        "hidden": "conditional",
+        "name": "whyItMatters",
+        "type": "text",
+        "title": "Por que importa"
+      },
+      {
+        "options": {
+          "accept": "application/pdf"
+        },
+        "name": "attachedPdf",
+        "type": "file",
+        "title": "PDF anexado (opcional)"
+      }
+    ],
+    "name": "article",
+    "type": "document",
+    "title": "Artigo / Research"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Título"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 2,
+        "name": "excerpt",
+        "type": "text",
+        "title": "Resumo (1 linha)"
+      },
+      {
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference",
+        "title": "Categoria"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Apenas o ID (a parte após \"v=\" na URL). Ex: hGYrUP6o9hg",
+        "name": "youtubeId",
+        "type": "string",
+        "title": "ID do YouTube"
+      },
+      {
+        "description": "CNN Brasil Money, Jovem Pan News, Money Times, etc.",
+        "name": "channel",
+        "type": "string",
+        "title": "Canal"
+      },
+      {
+        "description": "Money News, Giro do Mercado, Estúdio News (opcional).",
+        "name": "program",
+        "type": "string",
+        "title": "Programa"
+      },
+      {
+        "name": "durationMin",
+        "type": "number",
+        "title": "Duração (min)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "Publicado em"
+      }
+    ],
+    "name": "video",
+    "type": "document",
+    "title": "Vídeo"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Título"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "rows": 4,
+        "name": "description",
+        "type": "text",
+        "title": "Descrição"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Live (online)",
+              "value": "live"
+            },
+            {
+              "title": "Reunião privada",
+              "value": "meeting"
+            },
+            {
+              "title": "Call com gestora",
+              "value": "call"
+            },
+            {
+              "title": "Webinar",
+              "value": "webinar"
+            },
+            {
+              "title": "Presencial",
+              "value": "in_person"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "live",
+                  "meeting",
+                  "call",
+                  "webinar",
+                  "in_person"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "kind",
+        "type": "string",
+        "title": "Tipo"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "startsAt",
+        "type": "datetime",
+        "title": "Início"
+      },
+      {
+        "name": "durationMin",
+        "type": "number",
+        "title": "Duração (min)"
+      },
+      {
+        "description": "Endereço, sala, ou plataforma (Zoom, Meet, etc.).",
+        "name": "location",
+        "type": "string",
+        "title": "Local"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "meetingUrl",
+        "type": "url",
+        "title": "Link da reunião (ao vivo)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "recordingUrl",
+        "type": "url",
+        "title": "Link da gravação (pós-evento)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "materialsUrl",
+        "type": "url",
+        "title": "Link dos materiais"
+      }
+    ],
+    "name": "event",
+    "type": "document",
+    "title": "Evento"
+  }
+]
