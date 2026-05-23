@@ -163,7 +163,7 @@ export default function SobrePage() {
               <ol className="relative border-l border-ink-900/15">
                 {trajectory.map((t, i) => (
                   <Reveal key={t.year} delay={i * 0.06}>
-                    <li className="relative pl-10 pb-12 last:pb-0">
+                    <li className="relative pl-10 pb-16 last:pb-0">
                       <span className="absolute left-[-5px] top-2 h-2.5 w-2.5 rounded-full bg-gold-500" />
                       <div className="text-[0.7rem] uppercase tracking-wider2 text-muted-500">
                         {t.year}
