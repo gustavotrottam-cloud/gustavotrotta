@@ -114,14 +114,14 @@ export default async function HomePage() {
               <Reveal delay={0.25}>
                 <div className="mt-10 flex flex-wrap items-center gap-4">
                   <Link
-                    href="#contato"
+                    href="/planejamento-financeiro"
                     className="inline-flex items-center gap-3 bg-ink-900 px-7 py-4 text-[0.72rem] uppercase tracking-wider2 text-paper-50 transition-all duration-300 hover:bg-navy-800"
                   >
-                    Agendar conversa
+                    Planejamento Financeiro Gratuito
                     <span aria-hidden>→</span>
                   </Link>
                   <Link
-                    href="#conteudo"
+                    href="/conteudo"
                     className="inline-flex items-center gap-3 px-1 py-2 text-[0.78rem] uppercase tracking-wider2 text-ink-900 underline-offset-8 hover:underline"
                   >
                     Acessar conteúdos
