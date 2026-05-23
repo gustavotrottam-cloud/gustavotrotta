@@ -6,7 +6,7 @@ import {
   generateArticlesFromYoutube,
   type GenerateOptions,
 } from "@/lib/article-generator";
-import type { AvailableCategory } from "@/lib/article-generator/generateWithClaude";
+import type { AvailableCategory } from "@/lib/article-generator/generateWithGemini";
 import type { GenerationResult } from "@/lib/article-generator/types";
 
 /** Server Action: gera N artigos a partir de URL YouTube. Só admin. */
@@ -32,14 +32,15 @@ export async function generateArticles(input: {
   }
 
   // 2. Valida envs
-  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
   const sanityProject = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
   const sanityDataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
   const sanityToken = process.env.SANITY_API_TOKEN;
-  if (!anthropicKey) {
+  if (!geminiKey) {
     return {
       ok: false,
-      error: "ANTHROPIC_API_KEY não configurada. Adicione no .env.local e nas env vars da Vercel.",
+      error:
+        "GEMINI_API_KEY não configurada. Adicione no .env.local e nas env vars da Vercel (https://aistudio.google.com → Get API key).",
     };
   }
   if (!sanityProject || !sanityDataset || !sanityToken) {
@@ -78,7 +79,7 @@ export async function generateArticles(input: {
     videoUrl: input.videoUrl,
     categories,
     generateImages: input.generateImages !== false,
-    anthropicKey,
+    geminiKey,
     sanityProject,
     sanityDataset,
     sanityToken,

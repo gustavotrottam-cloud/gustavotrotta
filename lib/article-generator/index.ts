@@ -2,7 +2,7 @@ import { extractVideoId, fetchTranscriptForVideo } from "./fetchTranscript";
 import {
   generateArticlesFromTranscript,
   type AvailableCategory,
-} from "./generateWithClaude";
+} from "./generateWithGemini";
 import { generateAndUploadHeroImage } from "./generateHeroImage";
 import { createDraftArticles } from "./publishToSanity";
 import type { GenerationResult } from "./types";
@@ -13,8 +13,8 @@ export type GenerateOptions = {
   categories: AvailableCategory[];
   /** Gera hero image via Pollinations + sobe no Sanity. Default true. */
   generateImages?: boolean;
-  /** Chave Anthropic. */
-  anthropicKey: string;
+  /** Chave Google AI Studio (Gemini). */
+  geminiKey: string;
   /** Credenciais Sanity. */
   sanityProject: string;
   sanityDataset: string;
@@ -41,14 +41,14 @@ export async function generateArticlesFromYoutube(
     // 1. Transcrição
     const transcript = await fetchTranscriptForVideo(videoId);
 
-    // 2. Claude — gera N artigos estruturados
+    // 2. Gemini — gera N artigos estruturados
     const { articles } = await generateArticlesFromTranscript({
       transcript: transcript.text,
       videoUrl: cleanUrl,
       videoId,
       durationSec: transcript.durationSec,
       categories: opts.categories,
-      apiKey: opts.anthropicKey,
+      apiKey: opts.geminiKey,
     });
 
     // 3. (Opcional) Gera hero images em paralelo
