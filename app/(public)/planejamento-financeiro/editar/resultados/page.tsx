@@ -6,6 +6,7 @@ import StatCard from "@/components/clientes/planejamento/StatCard";
 import WealthChart from "@/components/clientes/planejamento/WealthChart";
 import IncomeComparison from "@/components/clientes/planejamento/IncomeComparison";
 import PdfDownloadButton from "@/components/clientes/planejamento/PdfDownloadButton";
+import OpenAccountButtons from "@/components/clientes/planejamento/OpenAccountButtons";
 import { computeFromData } from "@/lib/planejamento/engine";
 import {
   isReadyForProjection,
@@ -93,12 +94,17 @@ export default async function ResultadosPage() {
       intro={`Cenário considerando retorno real de ${inputs.realReturnAnnualPct.toFixed(1).replace(".", ",")}% a.a., aporte de ${formatBRL(monthlySavings)}/mês e os ${derived.yearsUntilTarget} anos até a idade-alvo. Valores em reais de hoje.`}
     >
       {/* Download direto — dados já foram capturados na entrada */}
-      <div className="mb-10">
+      <div className="mb-6">
         <PdfDownloadButton
           pdfHref={pdfHref}
           greetingName={plan.lead_data?.name ?? null}
           onCompleted={markPlanCompleted}
         />
+      </div>
+
+      {/* CTAs opcionais — abertura de conta na XP via assessor */}
+      <div className="mb-10">
+        <OpenAccountButtons />
       </div>
 
       {/* Stats principais */}
