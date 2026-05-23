@@ -177,42 +177,7 @@ export default async function HomePage() {
       {/* ── RECONHECIMENTOS ────────────────────────────────────────────────── */}
       <Recognitions variant="light" compact />
 
-      {/* ── FILOSOFIA ──────────────────────────────────────────────────────── */}
-      <Section id="filosofia" className="bg-paper-200/60">
-        <Container>
-          <SectionHeading
-            eyebrow="Filosofia"
-            title={
-              <>
-                Quatro princípios que sustentam <span className="italic text-navy-800">cada decisão</span>.
-              </>
-            }
-            intro="Não trabalhamos por tese de curto prazo nem por produto da semana. Cada estratégia parte dos mesmos quatro pontos — independentemente do perfil de cliente, do tamanho do patrimônio ou do momento do mercado."
-          />
-
-          <div className="mt-20 grid gap-x-12 gap-y-16 md:grid-cols-2">
-            {pillars.map((p, i) => (
-              <Reveal key={p.n} delay={i * 0.06}>
-                <div className="flex gap-8">
-                  <div className="shrink-0 font-serif text-[1.6rem] text-gold-500">
-                    {p.n}
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-2xl tracking-editorial text-ink-900 md:text-[1.7rem]">
-                      {p.title}
-                    </h3>
-                    <p className="mt-4 text-[0.98rem] leading-relaxed text-muted-600">
-                      {p.body}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── PLANEJAMENTO FINANCEIRO — ferramenta gratuita ─────────────────── */}
+      {/* ── PLANEJAMENTO FINANCEIRO — ferramenta gratuita (destaque alto na home) ─ */}
       <Section id="planejamento" className="bg-ink-900 text-paper-100">
         <Container>
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
@@ -293,6 +258,41 @@ export default async function HomePage() {
                 </p>
               </Reveal>
             </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── FILOSOFIA ──────────────────────────────────────────────────────── */}
+      <Section id="filosofia" className="bg-paper-200/60">
+        <Container>
+          <SectionHeading
+            eyebrow="Filosofia"
+            title={
+              <>
+                Quatro princípios que sustentam <span className="italic text-navy-800">cada decisão</span>.
+              </>
+            }
+            intro="Não trabalhamos por tese de curto prazo nem por produto da semana. Cada estratégia parte dos mesmos quatro pontos — independentemente do perfil de cliente, do tamanho do patrimônio ou do momento do mercado."
+          />
+
+          <div className="mt-20 grid gap-x-12 gap-y-16 md:grid-cols-2">
+            {pillars.map((p, i) => (
+              <Reveal key={p.n} delay={i * 0.06}>
+                <div className="flex gap-8">
+                  <div className="shrink-0 font-serif text-[1.6rem] text-gold-500">
+                    {p.n}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl tracking-editorial text-ink-900 md:text-[1.7rem]">
+                      {p.title}
+                    </h3>
+                    <p className="mt-4 text-[0.98rem] leading-relaxed text-muted-600">
+                      {p.body}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </Section>

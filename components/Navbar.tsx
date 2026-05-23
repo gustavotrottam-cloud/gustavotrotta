@@ -8,7 +8,6 @@ const links = [
   { href: "/#filosofia", label: "Filosofia" },
   { href: "/sobre", label: "Sobre" },
   { href: "/#areas", label: "Áreas" },
-  { href: "/planejamento-financeiro", label: "Planejamento" },
   { href: "/conteudo", label: "Conteúdo" },
   { href: "/#midia", label: "Mídia" },
 ];
@@ -56,9 +55,16 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:items-center lg:gap-5">
             <Link
               href="#contato"
-              className="inline-flex items-center gap-2 border border-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2 text-ink-900 transition-all duration-300 hover:bg-ink-900 hover:text-paper-50"
+              className="text-[0.7rem] uppercase tracking-wider2 text-muted-500 transition-colors duration-300 hover:text-ink-900"
             >
               Agendar conversa
+            </Link>
+            <Link
+              href="/planejamento-financeiro"
+              className="inline-flex items-center gap-2 bg-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2 text-paper-50 transition-all duration-300 hover:bg-navy-800"
+            >
+              Planejamento Financeiro
+              <span aria-hidden>→</span>
             </Link>
           </div>
 
@@ -89,11 +95,19 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
+                href="/planejamento-financeiro"
+                onClick={() => setOpen(false)}
+                className="mt-4 inline-flex w-fit items-center gap-2 bg-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2 text-paper-50"
+              >
+                Planejamento Financeiro
+                <span aria-hidden>→</span>
+              </Link>
+              <Link
                 href="#contato"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex w-fit items-center border border-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2"
+                className="mt-2 inline-flex w-fit items-center text-[0.78rem] uppercase tracking-wider2 text-muted-500"
               >
-                Agendar conversa
+                Agendar conversa →
               </Link>
             </nav>
           </Container>
