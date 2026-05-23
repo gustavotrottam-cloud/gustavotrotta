@@ -62,6 +62,13 @@ export const articleBySlugQuery = groq`*[_type == "article" && slug.current == $
   "category": category->{name, "slug": slug.current, area},
 }`;
 
+/** Slugs e datas dos artigos publicados — payload mínimo para o sitemap. */
+export const articleSlugsQuery = groq`*[_type == "article" && defined(slug.current)] {
+  "slug": slug.current,
+  publishedAt,
+  _updatedAt
+}`;
+
 /** Vídeos. */
 export const videosQuery = groq`*[_type == "video"] | order(publishedAt desc) {
   _id,

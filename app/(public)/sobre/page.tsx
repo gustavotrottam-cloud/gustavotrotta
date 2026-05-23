@@ -398,13 +398,15 @@ export default function SobrePage() {
             </div>
             <div className="lg:col-span-4 lg:text-right">
               <Reveal delay={0.15}>
-                <Link
-                  href="mailto:gustavo.mendonca@valorinvestimentos.com.br"
+                <a
+                  href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20gostaria%20de%20agendar%20uma%20conversa."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-paper-100 px-8 py-5 text-[0.72rem] uppercase tracking-wider2 text-ink-900 transition-all hover:bg-gold-400"
                 >
                   Agendar conversa
                   <span aria-hidden>→</span>
-                </Link>
+                </a>
               </Reveal>
             </div>
           </div>

@@ -52,14 +52,22 @@ export async function generateMetadata({
       { slug: params.slug }
     );
     if (!article) return { title: "Artigo não encontrado" };
+    const canonicalPath = `/conteudo/${article.slug.current}`;
+    const heroOg = article.heroImage?.asset
+      ? urlForImage(article.heroImage).width(1200).height(630).fit("crop").url()
+      : undefined;
     return {
       title: `${article.title} — Gustavo Trotta`,
       description: article.excerpt,
+      alternates: { canonical: canonicalPath },
       openGraph: {
         title: article.title,
         description: article.excerpt,
         type: "article",
         publishedTime: article.publishedAt,
+        url: canonicalPath,
+        images: heroOg ? [{ url: heroOg, width: 1200, height: 630 }] : undefined,
+        authors: ["Gustavo Trotta"],
       },
     };
   } catch {
@@ -126,8 +134,39 @@ export default async function PublicArticlePage({
     ? urlForImage(article.heroImage).width(1600).height(900).fit("crop").url()
     : null;
 
+  const canonicalUrl = `https://gustavotrotta.com.br/conteudo/${article.slug.current}`;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    author: {
+      "@type": "Person",
+      name: "Gustavo Trotta",
+      url: "https://gustavotrotta.com.br",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Gustavo Trotta",
+      url: "https://gustavotrotta.com.br",
+    },
+    ...(heroUrl ? { image: heroUrl } : {}),
+    ...(article.category?.name ? { articleSection: article.category.name } : {}),
+    ...(article.tags?.length ? { keywords: article.tags.join(", ") } : {}),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+  };
+
   return (
     <Section className="pt-32 md:pt-40 pb-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Container>
         <article className="mx-auto max-w-3xl">
           {/* Breadcrumb */}

@@ -53,12 +53,14 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden lg:flex lg:items-center lg:gap-5">
-            <Link
-              href="#contato"
+            <a
+              href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20gostaria%20de%20agendar%20uma%20conversa."
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[0.7rem] uppercase tracking-wider2 text-muted-500 transition-colors duration-300 hover:text-ink-900"
             >
               Agendar conversa
-            </Link>
+            </a>
             <Link
               href="/planejamento-financeiro"
               className="inline-flex items-center gap-2 bg-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2 text-paper-50 transition-all duration-300 hover:bg-navy-800"
@@ -102,13 +104,15 @@ export default function Navbar() {
                 Planejamento Financeiro
                 <span aria-hidden>→</span>
               </Link>
-              <Link
-                href="#contato"
+              <a
+                href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20gostaria%20de%20agendar%20uma%20conversa."
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
                 className="mt-2 inline-flex w-fit items-center text-[0.78rem] uppercase tracking-wider2 text-muted-500"
               >
                 Agendar conversa →
-              </Link>
+              </a>
             </nav>
           </Container>
         </div>
