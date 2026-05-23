@@ -31,8 +31,15 @@ function formatDate(iso: string) {
   }
 }
 
-export default function ArticleCard({ article }: { article: ArticleCardData }) {
-  const href = `/clientes/biblioteca/${article.slug.current}`;
+export default function ArticleCard({
+  article,
+  basePath = "/clientes/biblioteca",
+}: {
+  article: ArticleCardData;
+  /** Caminho-base do link do card. Use "/conteudo" para a versão pública. */
+  basePath?: string;
+}) {
+  const href = `${basePath}/${article.slug.current}`;
   const imageUrl = article.heroImage?.asset
     ? urlForImage(article.heroImage).width(800).height(500).fit("crop").url()
     : null;

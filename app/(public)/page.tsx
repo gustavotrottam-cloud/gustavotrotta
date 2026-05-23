@@ -9,6 +9,20 @@ import MediaLogosStrip from "@/components/MediaLogosStrip";
 import InstitutionalBanner from "@/components/InstitutionalBanner";
 import Recognitions from "@/components/Recognitions";
 import { youtubeChannelUrl } from "@/lib/media";
+import { sanityClient } from "@/sanity/lib/client";
+import { articlesQuery } from "@/sanity/lib/queries";
+
+// Permite atualizar os destaques da home quando algo é publicado no Sanity.
+export const revalidate = 60;
+
+type HomeArticle = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  excerpt: string;
+  readingTimeMin?: number;
+  category?: { name: string; slug: string };
+};
 
 const pillars = [
   {
@@ -60,28 +74,17 @@ const areas = [
   },
 ];
 
-const contentTeasers = [
-  {
-    kind: "Cenário macro",
-    title: "O ciclo de juros e o que muda na alocação para 2026",
-    excerpt:
-      "Como ler a curva, posicionar a renda fixa e calibrar risco em um regime de juros estruturalmente mais baixos.",
-  },
-  {
-    kind: "Planejamento",
-    title: "Previdência privada não é produto — é estrutura",
-    excerpt:
-      "Por que tratar PGBL e VGBL como veículos de planejamento muda completamente a decisão de aporte e a sucessão.",
-  },
-  {
-    kind: "Renda fixa",
-    title: "Crédito privado: três perguntas antes de comprar",
-    excerpt:
-      "Spread, garantia e liquidez. Como avaliar um CDB, debênture ou CRI sem ser refém da rentabilidade nominal.",
-  },
-];
+export default async function HomePage() {
+  // Os 3 artigos mais recentes do Sanity. Falha silenciosa: se o fetch
+  // quebrar, a seção #conteudo apenas convida pra /conteudo sem destaques.
+  let featuredArticles: HomeArticle[] = [];
+  try {
+    const all = await sanityClient.fetch<HomeArticle[]>(articlesQuery);
+    featuredArticles = all.slice(0, 3);
+  } catch (err) {
+    console.error("[home] Sanity fetch error:", err);
+  }
 
-export default function HomePage() {
   return (
     <>
       {/* ── HERO ───────────────────────────────────────────────────────────── */}
@@ -410,7 +413,7 @@ export default function HomePage() {
             />
             <Reveal delay={0.15}>
               <Link
-                href="#"
+                href="/conteudo"
                 className="shrink-0 self-start text-[0.78rem] uppercase tracking-wider2 text-ink-900 underline-offset-8 hover:underline md:self-end"
               >
                 Ver todos os conteúdos →
@@ -418,26 +421,49 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {contentTeasers.map((c, i) => (
-              <Reveal key={c.title} delay={i * 0.08}>
-                <article className="group h-full border-t border-ink-900/15 pt-8 transition-all duration-500 hover:border-ink-900/40">
-                  <div className="text-[0.7rem] uppercase tracking-wider2 text-gold-600">
-                    {c.kind}
-                  </div>
-                  <h3 className="mt-5 font-serif text-[1.55rem] leading-[1.15] tracking-editorial text-ink-900 transition-colors group-hover:text-navy-800">
-                    {c.title}
-                  </h3>
-                  <p className="mt-4 text-[0.95rem] leading-relaxed text-muted-600">
-                    {c.excerpt}
-                  </p>
-                  <div className="mt-8 text-[0.72rem] uppercase tracking-wider2 text-muted-500">
-                    Leitura · 6 min
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          {featuredArticles.length > 0 ? (
+            <div className="mt-16 grid gap-8 md:grid-cols-3">
+              {featuredArticles.map((article, i) => (
+                <Reveal key={article._id} delay={i * 0.08}>
+                  <Link
+                    href={`/conteudo/${article.slug.current}`}
+                    className="group block h-full"
+                  >
+                    <article className="flex h-full flex-col border-t border-ink-900/15 pt-8 transition-all duration-500 group-hover:border-ink-900/40">
+                      <div className="text-[0.7rem] uppercase tracking-wider2 text-gold-600">
+                        {article.category?.name ?? "Conteúdo"}
+                      </div>
+                      <h3 className="mt-5 font-serif text-[1.55rem] leading-[1.15] tracking-editorial text-ink-900 transition-colors group-hover:text-navy-800">
+                        {article.title}
+                      </h3>
+                      <p className="mt-4 text-[0.95rem] leading-relaxed text-muted-600">
+                        {article.excerpt}
+                      </p>
+                      <div className="mt-auto pt-8 text-[0.72rem] uppercase tracking-wider2 text-muted-500">
+                        {article.readingTimeMin
+                          ? `Leitura · ${article.readingTimeMin} min`
+                          : "Ler artigo →"}
+                      </div>
+                    </article>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          ) : (
+            <Reveal>
+              <div className="mt-16 border border-ink-900/10 bg-paper-200/40 px-8 py-12 text-center md:px-16">
+                <p className="font-serif text-[1.4rem] leading-relaxed text-ink-900">
+                  Acompanhe os próximos materiais na central de conteúdo.
+                </p>
+                <Link
+                  href="/conteudo"
+                  className="mt-6 inline-flex items-center gap-3 border border-ink-900 px-6 py-3 text-[0.72rem] uppercase tracking-wider2 text-ink-900 transition-all duration-300 hover:bg-ink-900 hover:text-paper-50"
+                >
+                  Acessar central →
+                </Link>
+              </div>
+            </Reveal>
+          )}
         </Container>
       </Section>
 

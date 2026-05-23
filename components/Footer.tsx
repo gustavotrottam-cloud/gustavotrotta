@@ -43,7 +43,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#conteudo" className="hover:text-ink-900 transition-colors">
+                <Link href="/conteudo" className="hover:text-ink-900 transition-colors">
                   Central de conteúdo
                 </Link>
               </li>
