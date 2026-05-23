@@ -3,25 +3,36 @@
 import { revalidatePath } from "next/cache";
 import { createServerSupabase } from "@/lib/supabase/server";
 import {
-  generateArticlesFromYoutube,
-  type GenerateOptions,
+  generateFromYoutubeUrl,
+  generateFromAudio,
+  generateFromTranscript,
 } from "@/lib/article-generator";
 import type { AvailableCategory } from "@/lib/article-generator/generateWithGemini";
 import type { GenerationResult } from "@/lib/article-generator/types";
 
-/** Server Action: gera N artigos a partir de URL YouTube. Só admin. */
-export async function generateArticles(input: {
-  videoUrl: string;
-  generateImages?: boolean;
-}): Promise<GenerationResult> {
-  // 1. Auth check — só admin
+export type GenerateMode = "url" | "audio" | "transcript";
+
+/**
+ * Server Action única que despacha pros 3 caminhos.
+ * Usa FormData pra suportar upload de áudio (modo "audio").
+ *
+ * Campos esperados:
+ *   - mode: "url" | "audio" | "transcript" (obrigatório)
+ *   - videoUrl: string (obrigatório em todos os modos — pra link inline no artigo)
+ *   - generateImages: "on" | undefined (checkbox)
+ *   - audioFile: File (modo "audio")
+ *   - transcript: string (modo "transcript")
+ */
+export async function generateArticles(
+  formData: FormData
+): Promise<GenerationResult> {
+  // 1. Auth — só admin
   const supabase = createServerSupabase();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) {
-    return { ok: false, error: "Não autenticado" };
-  }
+  if (!user) return { ok: false, error: "Não autenticado" };
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
@@ -31,7 +42,7 @@ export async function generateArticles(input: {
     return { ok: false, error: "Acesso restrito ao administrador" };
   }
 
-  // 2. Valida envs
+  // 2. Envs Gemini + Sanity (sempre necessárias)
   const geminiKey = process.env.GEMINI_API_KEY;
   const sanityProject = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
   const sanityDataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -40,17 +51,14 @@ export async function generateArticles(input: {
     return {
       ok: false,
       error:
-        "GEMINI_API_KEY não configurada. Adicione no .env.local e nas env vars da Vercel (https://aistudio.google.com → Get API key).",
+        "GEMINI_API_KEY não configurada. Adicione no .env.local e nas env vars da Vercel.",
     };
   }
   if (!sanityProject || !sanityDataset || !sanityToken) {
-    return {
-      ok: false,
-      error: "Configuração Sanity incompleta no servidor",
-    };
+    return { ok: false, error: "Configuração Sanity incompleta no servidor" };
   }
 
-  // 3. Busca categorias disponíveis no Sanity
+  // 3. Categorias do Sanity
   let categories: AvailableCategory[] = [];
   try {
     const resp = await fetch(
@@ -69,23 +77,67 @@ export async function generateArticles(input: {
       }`,
     };
   }
-
   if (categories.length === 0) {
     return { ok: false, error: "Nenhuma categoria configurada no Sanity" };
   }
 
-  // 4. Roda o pipeline completo
-  const opts: GenerateOptions = {
-    videoUrl: input.videoUrl,
+  // 4. Despacha por modo
+  const mode = formData.get("mode") as GenerateMode | null;
+  const videoUrl = (formData.get("videoUrl") as string | null)?.trim() ?? "";
+  const generateImages = formData.get("generateImages") === "on";
+
+  if (!videoUrl) {
+    return { ok: false, error: "URL do vídeo é obrigatória." };
+  }
+
+  const baseCreds = {
     categories,
-    generateImages: input.generateImages !== false,
+    generateImages,
     geminiKey,
     sanityProject,
     sanityDataset,
     sanityToken,
   };
 
-  const result = await generateArticlesFromYoutube(opts);
+  let result: GenerationResult;
+
+  if (mode === "url") {
+    result = await generateFromYoutubeUrl({ ...baseCreds, videoUrl });
+  } else if (mode === "audio") {
+    const audioFile = formData.get("audioFile") as File | null;
+    if (!audioFile || audioFile.size === 0) {
+      return { ok: false, error: "Arquivo de áudio não enviado." };
+    }
+    const groqKey = process.env.GROQ_API_KEY;
+    if (!groqKey) {
+      return {
+        ok: false,
+        error:
+          "GROQ_API_KEY não configurada. Crie em https://console.groq.com e adicione nas env vars.",
+      };
+    }
+    result = await generateFromAudio({
+      ...baseCreds,
+      videoUrl,
+      audioFile,
+      groqKey,
+    });
+  } else if (mode === "transcript") {
+    const transcript = (formData.get("transcript") as string | null)?.trim() ?? "";
+    if (!transcript) {
+      return { ok: false, error: "Transcrição vazia." };
+    }
+    const durationSecRaw = formData.get("durationSec") as string | null;
+    const durationSec = durationSecRaw ? parseInt(durationSecRaw, 10) : 0;
+    result = await generateFromTranscript({
+      ...baseCreds,
+      videoUrl,
+      transcript,
+      durationSec: Number.isNaN(durationSec) ? 0 : durationSec,
+    });
+  } else {
+    return { ok: false, error: `Modo inválido: ${mode}` };
+  }
 
   if (result.ok) {
     revalidatePath("/clientes/admin/artigos");

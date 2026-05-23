@@ -66,6 +66,12 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: ["sanity"],
+    // Upload de áudio na geração de artigos via Groq Whisper (admin).
+    // Default Next 14 é 1MB; subimos pra 5MB (limite efetivo da Vercel
+    // pra Server Action body é ~4.5MB de qualquer jeito).
+    serverActions: {
+      bodySizeLimit: "5mb",
+    },
   },
   images: {
     remotePatterns: [
