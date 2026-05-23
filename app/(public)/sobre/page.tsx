@@ -165,7 +165,7 @@ export default function SobrePage() {
                   <Reveal key={t.year} delay={i * 0.06}>
                     <li className="relative pl-10 pb-24 last:pb-0">
                       <span className="absolute left-[-5px] top-2 h-2.5 w-2.5 rounded-full bg-gold-500" />
-                      <div className="text-[0.7rem] uppercase tracking-wider2 text-muted-500">
+                      <div className="text-[0.72rem] uppercase tracking-wider2 text-gold-600">
                         {t.year}
                       </div>
                       <h3 className="mt-2 font-serif text-2xl tracking-editorial text-ink-900 md:text-[1.75rem]">
