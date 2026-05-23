@@ -710,40 +710,183 @@ export default async function PdfPlanejamentoPage({
           </ul>
         </div>
 
+        {/* Próximo passo — links de ação */}
         <div
           style={{
             marginTop: 16,
             borderTop: "1px solid #E5E3DA",
             paddingTop: "7mm",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "10mm",
           }}
         >
-          <div>
-            <div className="pdf-eyebrow">Próximo passo</div>
-            <h3 className="pdf-h3" style={{ marginTop: 4 }}>
-              Vamos conversar.
-            </h3>
-            <p className="pdf-prose" style={{ marginTop: 4, fontSize: "9.5pt" }}>
-              Este documento serve de base pra uma conversa estratégica sobre
-              alocação, eficiência tributária, previdência e sucessão — sempre
-              calibrada ao seu contexto.
-            </p>
+          <div className="pdf-eyebrow">Quando decidir avançar</div>
+          <h3 className="pdf-h3" style={{ marginTop: 4 }}>
+            Caminhos para começar.
+          </h3>
+          <p
+            className="pdf-prose"
+            style={{ marginTop: 4, fontSize: "9.5pt" }}
+          >
+            Abrir conta comigo na XP inicia o acompanhamento próximo. Passo a
+            ser seu assessor dedicado, revisando e ajustando a estratégia
+            patrimonial em cadência regular.
+          </p>
+
+          <div
+            style={{
+              marginTop: "5mm",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              gap: "4mm",
+            }}
+          >
+            <a
+              href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A26522"
+              style={{
+                display: "block",
+                padding: "4mm 4mm",
+                border: "1px solid #0E0E10",
+                textDecoration: "none",
+                color: "#0E0E10",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "7pt",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#C8A461",
+                }}
+              >
+                Abrir conta
+              </div>
+              <div
+                style={{
+                  marginTop: "1.5mm",
+                  fontFamily: "var(--font-serif), serif",
+                  fontSize: "11pt",
+                }}
+              >
+                Pessoa Física
+              </div>
+              <div
+                style={{
+                  marginTop: "2mm",
+                  fontSize: "7.5pt",
+                  color: "#6B6B70",
+                  wordBreak: "break-all",
+                }}
+              >
+                cadastro.xpi.com.br
+              </div>
+            </a>
+
+            <a
+              href="https://cadastro.xpempresas.com.br/cadastro/desktop/dados-pessoais/?assessor=A26522"
+              style={{
+                display: "block",
+                padding: "4mm 4mm",
+                border: "1px solid #0E0E10",
+                textDecoration: "none",
+                color: "#0E0E10",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "7pt",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#C8A461",
+                }}
+              >
+                Abrir conta
+              </div>
+              <div
+                style={{
+                  marginTop: "1.5mm",
+                  fontFamily: "var(--font-serif), serif",
+                  fontSize: "11pt",
+                }}
+              >
+                Pessoa Jurídica
+              </div>
+              <div
+                style={{
+                  marginTop: "2mm",
+                  fontSize: "7.5pt",
+                  color: "#6B6B70",
+                  wordBreak: "break-all",
+                }}
+              >
+                cadastro.xpempresas.com.br
+              </div>
+            </a>
+
+            <a
+              href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20fiz%20o%20planejamento%20financeiro%20no%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20reuni%C3%A3o."
+              style={{
+                display: "block",
+                padding: "4mm 4mm",
+                border: "1px solid #25D366",
+                background: "#25D366",
+                textDecoration: "none",
+                color: "#FFFFFF",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "7pt",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  opacity: 0.85,
+                }}
+              >
+                Conversar antes
+              </div>
+              <div
+                style={{
+                  marginTop: "1.5mm",
+                  fontFamily: "var(--font-serif), serif",
+                  fontSize: "11pt",
+                }}
+              >
+                Agendar reunião
+              </div>
+              <div style={{ marginTop: "2mm", fontSize: "7.5pt", opacity: 0.85 }}>
+                WhatsApp · 11 93221-2045
+              </div>
+            </a>
           </div>
-          <div>
-            <div className="pdf-eyebrow">Contato</div>
-            <div style={{ marginTop: 6, fontSize: "10pt", lineHeight: 1.6 }}>
+        </div>
+
+        {/* Contato — sempre visível */}
+        <div
+          style={{
+            marginTop: "7mm",
+            paddingTop: "5mm",
+            borderTop: "1px solid #E5E3DA",
+          }}
+        >
+          <div className="pdf-eyebrow">Contato</div>
+          <div
+            style={{
+              marginTop: 4,
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "6mm",
+              fontSize: "9.5pt",
+              lineHeight: 1.55,
+            }}
+          >
+            <div>
               <div>
                 <strong>Gustavo Trotta</strong>
               </div>
               <div style={{ color: "#6B6B70" }}>
                 Valor Investimentos · XP · CFP®
               </div>
-              <div style={{ marginTop: "3mm" }}>
-                gustavo.mendonca@valorinvestimentos.com.br
-              </div>
-              <div>WhatsApp · +55 11 93221-2045</div>
+            </div>
+            <div style={{ color: "#3a3a3d" }}>
+              <div>gustavo.mendonca@valorinvestimentos.com.br</div>
               <div>São Paulo · Brasil</div>
             </div>
           </div>
