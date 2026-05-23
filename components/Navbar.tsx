@@ -55,12 +55,6 @@ export default function Navbar() {
 
           <div className="hidden lg:flex lg:items-center lg:gap-5">
             <Link
-              href="/clientes"
-              className="text-[0.7rem] uppercase tracking-wider2 text-muted-500 transition-colors duration-300 hover:text-ink-900"
-            >
-              Área Exclusiva
-            </Link>
-            <Link
               href="#contato"
               className="inline-flex items-center gap-2 border border-ink-900 px-5 py-2.5 text-[0.7rem] uppercase tracking-wider2 text-ink-900 transition-all duration-300 hover:bg-ink-900 hover:text-paper-50"
             >
@@ -94,13 +88,6 @@ export default function Navbar() {
                   {l.label}
                 </Link>
               ))}
-              <Link
-                href="/clientes"
-                onClick={() => setOpen(false)}
-                className="mt-2 inline-flex w-fit items-center text-[0.78rem] uppercase tracking-wider2 text-muted-500"
-              >
-                Área Exclusiva →
-              </Link>
               <Link
                 href="#contato"
                 onClick={() => setOpen(false)}
