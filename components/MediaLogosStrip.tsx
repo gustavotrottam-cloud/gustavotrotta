@@ -8,6 +8,7 @@ import Reveal from "./Reveal";
  */
 const channels = [
   { name: "CNN BRASIL", className: "font-black tracking-tighter" },
+  { name: "GLOBONEWS", className: "font-extrabold tracking-tight" },
   { name: "JOVEM PAN", className: "font-extrabold tracking-tighter" },
   { name: "VEJA+", className: "font-extrabold italic tracking-tight" },
   { name: "RECORD NEWS", className: "font-bold tracking-wide" },
@@ -20,7 +21,7 @@ export default function MediaLogosStrip() {
     <Reveal>
       <div className="border-y border-ink-900/15 py-10 md:py-12">
         <div className="text-center">
-          <div className="eyebrow">Vistos em</div>
+          <div className="eyebrow">Presença na imprensa</div>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 text-ink-900/75 md:gap-x-14 lg:gap-x-16">
             {channels.map((c) => (
               <span

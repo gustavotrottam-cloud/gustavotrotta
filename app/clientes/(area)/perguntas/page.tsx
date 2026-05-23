@@ -4,7 +4,7 @@ import CuratorNotice from "@/components/clientes/CuratorNotice";
 const channels = [
   {
     label: "FAQ inteligente",
-    body: "Respostas curtas e objetivas para as dúvidas mais frequentes — previdência, tributação, sucessão e alocação.",
+    body: "Respostas curtas e objetivas para as dúvidas mais frequentes — investimentos, proteção, aposentadoria, tributação e sucessão.",
   },
   {
     label: "Busca por tema",

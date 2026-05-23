@@ -49,28 +49,28 @@ const pillars = [
 
 const areas = [
   {
-    title: "Planejamento patrimonial",
-    body: "Mapeamento do patrimônio, estrutura de longo prazo e governança familiar.",
+    title: "Estrutura financeira",
+    body: "Organização de fluxo de caixa, dívidas, reserva de liquidez e disciplina de poupança como base de qualquer plano de longo prazo.",
   },
   {
-    title: "Previdência privada",
-    body: "PGBL, VGBL e estratégias de acumulação com eficiência tributária e sucessória.",
+    title: "Gestão de investimentos",
+    body: "Alocação por objetivo, risco e horizonte — não por produto da semana. Diversificação real, leitura de cenário e revisão sistemática.",
+  },
+  {
+    title: "Proteção patrimonial",
+    body: "Seguros pessoais, blindagem e estruturas que preservam o patrimônio em cenários adversos e na ausência inesperada do provedor.",
+  },
+  {
+    title: "Aposentadoria e independência",
+    body: "Projeção de longo prazo, idade-alvo de independência financeira e aporte mensal de manutenção calculados sobre seu próprio cenário.",
   },
   {
     title: "Eficiência tributária",
-    body: "Decisões de alocação considerando o impacto fiscal em cada veículo e fase de vida.",
+    body: "Decisões de alocação considerando o impacto fiscal em cada veículo, fase de vida e modalidade de tributação.",
   },
   {
-    title: "Renda fixa",
-    body: "Curva de juros, crédito privado, isentos e títulos públicos com leitura macro.",
-  },
-  {
-    title: "Fundos imobiliários",
-    body: "Seleção criteriosa por gestão, ativos subjacentes e tese — não por dividend yield isolado.",
-  },
-  {
-    title: "Sucessão",
-    body: "Estruturação patrimonial pensando em continuidade, proteção e transmissão consciente.",
+    title: "Planejamento sucessório",
+    body: "Estruturação patrimonial pensando em continuidade, proteção e transmissão consciente entre gerações.",
   },
 ];
 
@@ -332,10 +332,11 @@ export default async function HomePage() {
               <Reveal delay={0.15}>
                 <p className="mt-5 text-[1.02rem] leading-relaxed text-muted-600">
                   Bacharel em Finanças Corporativas pela Ohio University. Dedica-se
-                  a planejamento patrimonial, previdência, tributação, renda fixa e
-                  alocação global — com o mesmo rigor analítico que a engenharia
-                  ensinou. Em paralelo, mantém presença regular em emissoras
-                  nacionais como comentarista de cenário econômico.
+                  ao planejamento financeiro com visão integrada — investimentos,
+                  proteção, aposentadoria, eficiência tributária e sucessão —
+                  com o mesmo rigor analítico que a engenharia ensinou. Em paralelo,
+                  mantém presença regular em emissoras nacionais como comentarista
+                  de cenário econômico.
                 </p>
               </Reveal>
               <Reveal delay={0.2}>
@@ -358,19 +359,20 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <Reveal>
               <div className="text-[0.7rem] uppercase tracking-wider3 text-paper-100/60">
-                Áreas de atuação
+                As 6 áreas do planejamento financeiro
               </div>
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="mt-5 font-serif text-4xl leading-[1.05] tracking-editorial md:text-[3.2rem]">
-                Onde a estratégia <span className="italic text-gold-400">se materializa.</span>
+                Uma visão <span className="italic text-gold-400">integrada</span> do patrimônio.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 text-[1.02rem] leading-relaxed text-paper-100/70">
-                Cada área é tratada como peça de um mesmo sistema. A decisão em uma
-                delas — uma alocação em previdência, uma reestruturação tributária —
-                conversa com todas as outras.
+                A certificação CFP organiza o planejamento financeiro em seis áreas
+                interdependentes. Cada uma é tratada como peça de um mesmo sistema —
+                uma decisão em investimentos conversa com proteção, tributação e
+                sucessão. É essa visão integrada que sustenta o acompanhamento.
               </p>
             </Reveal>
           </div>
@@ -378,7 +380,7 @@ export default async function HomePage() {
           <div className="mt-20 grid gap-px bg-paper-100/10 md:grid-cols-2 lg:grid-cols-3">
             {areas.map((a, i) => (
               <Reveal key={a.title} delay={i * 0.04}>
-                <div className="group relative h-full bg-ink-900 p-10 transition-colors duration-500 hover:bg-ink-800">
+                <div className="relative h-full bg-ink-900 p-10">
                   <div className="font-serif text-[0.9rem] text-gold-400">
                     {String(i + 1).padStart(2, "0")}
                   </div>
@@ -388,9 +390,6 @@ export default async function HomePage() {
                   <p className="mt-4 text-[0.95rem] leading-relaxed text-paper-100/70">
                     {a.body}
                   </p>
-                  <span className="absolute right-8 top-10 text-paper-100/30 transition-transform duration-500 group-hover:translate-x-1">
-                    →
-                  </span>
                 </div>
               </Reveal>
             ))}

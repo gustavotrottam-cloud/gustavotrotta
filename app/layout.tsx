@@ -19,12 +19,12 @@ const sans = Inter({
 export const metadata: Metadata = {
   title: "Gustavo Trotta — Estratégia patrimonial e visão de longo prazo",
   description:
-    "Assessor de investimentos e sócio da Valor Investimentos / XP. Planejamento patrimonial, previdência, tributação e alocação com clareza e acompanhamento próximo.",
+    "Assessor CFP e sócio da Valor Investimentos / XP. Visão integrada das seis áreas do planejamento financeiro — investimentos, proteção, aposentadoria, eficiência tributária e sucessão — com clareza e acompanhamento próximo.",
   metadataBase: new URL("https://gustavotrotta.com.br"),
   openGraph: {
     title: "Gustavo Trotta — Estratégia patrimonial",
     description:
-      "Planejamento patrimonial, previdência, tributação e alocação com clareza e acompanhamento próximo.",
+      "Visão integrada das seis áreas do planejamento financeiro — investimentos, proteção, aposentadoria, eficiência tributária e sucessão — com clareza e acompanhamento próximo.",
     type: "website",
     locale: "pt_BR",
   },
