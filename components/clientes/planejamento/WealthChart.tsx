@@ -80,7 +80,7 @@ export default function WealthChart({
               padding: "10px 14px",
             }}
             labelStyle={{ color: "#6B6B70", marginBottom: 4 }}
-            formatter={(value: number) => [formatBRL(value), "Patrimônio"]}
+            formatter={(value) => [formatBRL(Number(value ?? 0)), "Patrimônio"]}
             labelFormatter={(age) => `${age} anos`}
           />
 

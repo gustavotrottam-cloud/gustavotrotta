@@ -6,12 +6,12 @@ export default defineCliConfig({
     dataset: "production",
   },
   studioHost: "gustavotrotta",
+  /**
+   * autoUpdates do Studio — campo aceito pelo Sanity CLI em runtime mas não
+   * tipado no CliConfig público.
+   */
+  // @ts-expect-error — deployment não está no tipo público mas é suportado
   deployment: {
-    /**
-     * Habilita auto-update do Studio quando o deploy roda — Sanity puxa
-     * a versão mais recente do core compatível, sem precisar deploy manual
-     * sempre que tem patch de segurança.
-     */
     autoUpdates: true,
   },
 });

@@ -5,9 +5,15 @@ import type { PlanningData } from "./types";
  * — funciona tanto no modo simplificado quanto no detalhado.
  */
 
-export function sumValues(obj: Record<string, number | undefined> | undefined): number {
+export function sumValues(
+  obj: Record<string, number | string | undefined> | undefined
+): number {
   if (!obj) return 0;
-  return Object.values(obj).reduce<number>((acc, v) => acc + (Number(v) || 0), 0);
+  return Object.values(obj).reduce<number>((acc, v) => {
+    // Ignora strings (campos como otherDescription) — só soma números
+    if (typeof v !== "number") return acc;
+    return acc + (Number.isFinite(v) ? v : 0);
+  }, 0);
 }
 
 export function getMonthlyIncome(cashflow: PlanningData["cashflow"]): number {

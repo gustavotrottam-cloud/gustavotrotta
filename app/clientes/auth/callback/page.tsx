@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
@@ -11,8 +11,34 @@ import { createBrowserSupabase } from "@/lib/supabase/browser";
  *  - Implicit (links gerados via Admin API generateLink): chega com `#access_token=...` no hash
  *
  * Como o hash não é enviado ao server, este precisa ser um Client Component.
+ *
+ * useSearchParams() força CSR bailout — wrapeamos em Suspense pra permitir
+ * prerender da página (Next 14 exige).
  */
 export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={<LoadingShell />}>
+      <AuthCallbackInner />
+    </Suspense>
+  );
+}
+
+function LoadingShell() {
+  return (
+    <div className="grid min-h-screen place-items-center bg-paper-100 px-6">
+      <div className="max-w-md text-center">
+        <div className="font-serif text-[1.25rem] tracking-editorial text-ink-900">
+          Gustavo <span className="text-gold-500">Trotta</span>
+        </div>
+        <h1 className="mt-10 font-serif text-[1.8rem] leading-[1.15] tracking-editorial text-ink-900">
+          Entrando<span className="text-gold-500">...</span>
+        </h1>
+      </div>
+    </div>
+  );
+}
+
+function AuthCallbackInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
