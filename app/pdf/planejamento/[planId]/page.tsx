@@ -15,6 +15,7 @@ import {
 } from "@/lib/planejamento/aggregation";
 import { formatBRL, formatBRLShort } from "@/lib/planejamento/format";
 import type { PlanningPlan } from "@/lib/planejamento/types";
+import { resolveCtaFlow } from "@/lib/planejamento/cta-rules";
 import PdfWealthChart from "@/components/pdf/PdfWealthChart";
 
 export const dynamic = "force-dynamic";
@@ -122,6 +123,7 @@ export default async function PdfPlanejamentoPage({
   const isFeasible = gap >= 0;
   const ifAge = feasibility.estimatedIFAge;
   const today = formatToday();
+  const ctaFlow = resolveCtaFlow(financialTotal);
 
   const maxIncome = Math.max(
     inputs.desiredMonthlyIncomeBRL,
@@ -710,153 +712,214 @@ export default async function PdfPlanejamentoPage({
           </ul>
         </div>
 
-        {/* Próximo passo — links de ação */}
-        <div
-          style={{
-            marginTop: 16,
-            borderTop: "1px solid #E5E3DA",
-            paddingTop: "7mm",
-          }}
-        >
-          <div className="pdf-eyebrow">Quando decidir avançar</div>
-          <h3 className="pdf-h3" style={{ marginTop: 4 }}>
-            Caminhos para começar.
-          </h3>
-          <p
-            className="pdf-prose"
-            style={{ marginTop: 4, fontSize: "9.5pt" }}
-          >
-            Abrir conta comigo na XP inicia o acompanhamento próximo. Passo a
-            ser seu assessor dedicado, revisando e ajustando a estratégia
-            patrimonial em cadência regular.
-          </p>
-
+        {/* Próximo passo — variante por patrimônio financeiro */}
+        {ctaFlow.kind === "account-opening" ? (
           <div
             style={{
-              marginTop: "5mm",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "4mm",
+              marginTop: 16,
+              borderTop: "1px solid #E5E3DA",
+              paddingTop: "7mm",
             }}
           >
-            <a
-              href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A26522"
-              style={{
-                display: "block",
-                padding: "4mm 4mm",
-                border: "1px solid #0E0E10",
-                textDecoration: "none",
-                color: "#0E0E10",
-              }}
+            <div className="pdf-eyebrow">Quando decidir avançar</div>
+            <h3 className="pdf-h3" style={{ marginTop: 4 }}>
+              Caminhos para começar.
+            </h3>
+            <p
+              className="pdf-prose"
+              style={{ marginTop: 4, fontSize: "9.5pt" }}
             >
-              <div
-                style={{
-                  fontSize: "7pt",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "#C8A461",
-                }}
-              >
-                Abrir conta
-              </div>
-              <div
-                style={{
-                  marginTop: "1.5mm",
-                  fontFamily: "var(--font-serif), serif",
-                  fontSize: "11pt",
-                }}
-              >
-                Pessoa Física
-              </div>
-              <div
-                style={{
-                  marginTop: "2mm",
-                  fontSize: "7.5pt",
-                  color: "#6B6B70",
-                  wordBreak: "break-all",
-                }}
-              >
-                cadastro.xpi.com.br
-              </div>
-            </a>
+              Abrir conta comigo na XP inicia o acompanhamento próximo. Passo
+              a ser seu assessor dedicado, revisando e ajustando a estratégia
+              patrimonial em cadência regular.
+            </p>
 
-            <a
-              href="https://cadastro.xpempresas.com.br/cadastro/desktop/dados-pessoais/?assessor=A26522"
+            <div
               style={{
-                display: "block",
-                padding: "4mm 4mm",
-                border: "1px solid #0E0E10",
-                textDecoration: "none",
-                color: "#0E0E10",
+                marginTop: "5mm",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "4mm",
               }}
             >
-              <div
+              <a
+                href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A26522"
                 style={{
-                  fontSize: "7pt",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "#C8A461",
+                  display: "block",
+                  padding: "4mm 4mm",
+                  border: "1px solid #0E0E10",
+                  textDecoration: "none",
+                  color: "#0E0E10",
                 }}
               >
-                Abrir conta
-              </div>
-              <div
-                style={{
-                  marginTop: "1.5mm",
-                  fontFamily: "var(--font-serif), serif",
-                  fontSize: "11pt",
-                }}
-              >
-                Pessoa Jurídica
-              </div>
-              <div
-                style={{
-                  marginTop: "2mm",
-                  fontSize: "7.5pt",
-                  color: "#6B6B70",
-                  wordBreak: "break-all",
-                }}
-              >
-                cadastro.xpempresas.com.br
-              </div>
-            </a>
+                <div
+                  style={{
+                    fontSize: "7pt",
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "#C8A461",
+                  }}
+                >
+                  Abrir conta
+                </div>
+                <div
+                  style={{
+                    marginTop: "1.5mm",
+                    fontFamily: "var(--font-serif), serif",
+                    fontSize: "11pt",
+                  }}
+                >
+                  Pessoa Física
+                </div>
+                <div
+                  style={{
+                    marginTop: "2mm",
+                    fontSize: "7.5pt",
+                    color: "#6B6B70",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  cadastro.xpi.com.br
+                </div>
+              </a>
 
-            <a
-              href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20fiz%20o%20planejamento%20financeiro%20no%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20reuni%C3%A3o."
-              style={{
-                display: "block",
-                padding: "4mm 4mm",
-                border: "1px solid #25D366",
-                background: "#25D366",
-                textDecoration: "none",
-                color: "#FFFFFF",
-              }}
-            >
-              <div
+              <a
+                href="https://cadastro.xpempresas.com.br/cadastro/desktop/dados-pessoais/?assessor=A26522"
                 style={{
-                  fontSize: "7pt",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  opacity: 0.85,
+                  display: "block",
+                  padding: "4mm 4mm",
+                  border: "1px solid #0E0E10",
+                  textDecoration: "none",
+                  color: "#0E0E10",
                 }}
               >
-                Conversar antes
-              </div>
-              <div
+                <div
+                  style={{
+                    fontSize: "7pt",
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "#C8A461",
+                  }}
+                >
+                  Abrir conta
+                </div>
+                <div
+                  style={{
+                    marginTop: "1.5mm",
+                    fontFamily: "var(--font-serif), serif",
+                    fontSize: "11pt",
+                  }}
+                >
+                  Pessoa Jurídica
+                </div>
+                <div
+                  style={{
+                    marginTop: "2mm",
+                    fontSize: "7.5pt",
+                    color: "#6B6B70",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  cadastro.xpempresas.com.br
+                </div>
+              </a>
+
+              <a
+                href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20fiz%20o%20planejamento%20financeiro%20no%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20reuni%C3%A3o."
                 style={{
-                  marginTop: "1.5mm",
-                  fontFamily: "var(--font-serif), serif",
-                  fontSize: "11pt",
+                  display: "block",
+                  padding: "4mm 4mm",
+                  border: "1px solid #25D366",
+                  background: "#25D366",
+                  textDecoration: "none",
+                  color: "#FFFFFF",
                 }}
               >
-                Agendar reunião
-              </div>
-              <div style={{ marginTop: "2mm", fontSize: "7.5pt", opacity: 0.85 }}>
-                WhatsApp · 11 93221-2045
-              </div>
-            </a>
+                <div
+                  style={{
+                    fontSize: "7pt",
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    opacity: 0.85,
+                  }}
+                >
+                  Conversar antes
+                </div>
+                <div
+                  style={{
+                    marginTop: "1.5mm",
+                    fontFamily: "var(--font-serif), serif",
+                    fontSize: "11pt",
+                  }}
+                >
+                  Agendar reunião
+                </div>
+                <div style={{ marginTop: "2mm", fontSize: "7.5pt", opacity: 0.85 }}>
+                  WhatsApp · 11 93221-2045
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div
+            style={{
+              marginTop: 16,
+              borderTop: "1px solid #E5E3DA",
+              paddingTop: "7mm",
+            }}
+          >
+            <div className="pdf-eyebrow">Quando decidir avançar</div>
+            <h3 className="pdf-h3" style={{ marginTop: 4 }}>
+              Caminho para começar.
+            </h3>
+            <p
+              className="pdf-prose"
+              style={{ marginTop: 4, fontSize: "9.5pt" }}
+            >
+              Para acompanhar seus primeiros passos com a atenção que esse
+              momento merece, encaminho você diretamente a um especialista do
+              meu time. Mesmo método, mesmo cuidado — pensado para esse
+              estágio.
+            </p>
+
+            <div style={{ marginTop: "5mm" }}>
+              <a
+                href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20fiz%20o%20planejamento%20financeiro%20no%20seu%20site%20e%20gostaria%20de%20falar%20com%20algu%C3%A9m%20do%20seu%20time."
+                style={{
+                  display: "block",
+                  padding: "5mm 6mm",
+                  border: "1px solid #25D366",
+                  background: "#25D366",
+                  textDecoration: "none",
+                  color: "#FFFFFF",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "7pt",
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    opacity: 0.85,
+                  }}
+                >
+                  Falar com especialista
+                </div>
+                <div
+                  style={{
+                    marginTop: "1.5mm",
+                    fontFamily: "var(--font-serif), serif",
+                    fontSize: "12pt",
+                  }}
+                >
+                  Falar com especialista do time
+                </div>
+                <div style={{ marginTop: "2mm", fontSize: "7.5pt", opacity: 0.85 }}>
+                  WhatsApp · 11 93221-2045
+                </div>
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Contato — sempre visível */}
         <div

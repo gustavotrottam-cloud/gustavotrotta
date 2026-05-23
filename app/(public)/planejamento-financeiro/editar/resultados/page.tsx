@@ -11,6 +11,7 @@ import { computeFromData } from "@/lib/planejamento/engine";
 import {
   isReadyForProjection,
   getMonthlySavings,
+  getFinancialTotal,
 } from "@/lib/planejamento/aggregation";
 import { formatBRL, formatBRLShort } from "@/lib/planejamento/format";
 import { getPreviousStep, ACTIVE_STEPS } from "@/lib/planejamento/steps";
@@ -73,6 +74,7 @@ export default async function ResultadosPage() {
     results;
 
   const monthlySavings = getMonthlySavings(plan.data.cashflow);
+  const financialPatrimony = getFinancialTotal(plan.data.patrimony);
   const ifAge = feasibility.estimatedIFAge;
   const gap = feasibility.gapPerpetualBRL;
   const isFeasible = gap >= 0;
@@ -102,9 +104,9 @@ export default async function ResultadosPage() {
         />
       </div>
 
-      {/* CTAs opcionais — abertura de conta na XP via assessor */}
+      {/* CTAs — abertura de conta (≥300k) OU handoff pro time (<300k) */}
       <div className="mb-10">
-        <OpenAccountButtons />
+        <OpenAccountButtons financialPatrimony={financialPatrimony} />
       </div>
 
       {/* Stats principais */}

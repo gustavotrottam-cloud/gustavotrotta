@@ -1,19 +1,46 @@
+import { resolveCtaFlow } from "@/lib/planejamento/cta-rules";
+
 /**
- * Bloco de CTAs pra abertura de conta na XP (PF e PJ) + agendamento via WhatsApp.
- * Renderizado abaixo do botão de download do PDF, na página de resultados
- * do planejamento financeiro. Links abrem em aba nova.
+ * Bloco de CTAs no final do planejamento financeiro.
+ *
+ * - Patrimônio financeiro ≥ R$ 300k → abertura de conta (PF, PJ) + WhatsApp.
+ * - Patrimônio financeiro < R$ 300k → handoff pro time (botão WhatsApp único).
+ *
+ * Toda a regra está em `lib/planejamento/cta-rules.ts` pra reuso no PDF.
  */
 
 const PF_URL = "https://cadastro.xpi.com.br/desktop/step/1?assessor=A26522";
 const PJ_URL =
   "https://cadastro.xpempresas.com.br/cadastro/desktop/dados-pessoais/?assessor=A26522";
-const WHATSAPP_URL =
+
+const WHATSAPP_ADVANCE_URL =
   "https://wa.me/5511932212045?text=" +
   encodeURIComponent(
     "Olá Gustavo, fiz o planejamento financeiro no seu site e gostaria de agendar uma reunião para conversar sobre os próximos passos."
   );
 
-export default function OpenAccountButtons() {
+const WHATSAPP_TEAM_URL =
+  "https://wa.me/5511932212045?text=" +
+  encodeURIComponent(
+    "Olá Gustavo, fiz o planejamento financeiro no seu site e gostaria de falar com alguém do seu time."
+  );
+
+type Props = {
+  /** Total declarado em patrimônio financeiro (categoria patrimony.financial). */
+  financialPatrimony: number;
+};
+
+export default function OpenAccountButtons({ financialPatrimony }: Props) {
+  const flow = resolveCtaFlow(financialPatrimony);
+
+  if (flow.kind === "account-opening") {
+    return <AccountOpeningBlock />;
+  }
+  return <TeamHandoffBlock />;
+}
+
+/* ─── Variante para patrimônio ≥ R$ 300k ─────────────────────────── */
+function AccountOpeningBlock() {
   return (
     <div className="border border-ink-900/15 bg-paper-100 px-8 py-7 md:px-10 md:py-8">
       <div className="grid items-start gap-8 md:grid-cols-12">
@@ -53,7 +80,7 @@ export default function OpenAccountButtons() {
             <span aria-hidden>→</span>
           </a>
           <a
-            href={WHATSAPP_URL}
+            href={WHATSAPP_ADVANCE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-between gap-3 bg-[#25D366] px-6 py-4 text-[0.72rem] uppercase tracking-wider2 text-white transition-all duration-300 hover:bg-[#1ebe57]"
@@ -61,6 +88,44 @@ export default function OpenAccountButtons() {
             <span className="inline-flex items-center gap-2.5">
               <WhatsAppIcon />
               Agendar reunião · WhatsApp
+            </span>
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Variante para patrimônio < R$ 300k ─────────────────────────── */
+function TeamHandoffBlock() {
+  return (
+    <div className="border border-ink-900/15 bg-paper-100 px-8 py-7 md:px-10 md:py-8">
+      <div className="grid items-start gap-8 md:grid-cols-12">
+        <div className="md:col-span-6">
+          <div className="text-[0.7rem] uppercase tracking-wider2 text-gold-600">
+            Próximo passo
+          </div>
+          <h3 className="mt-2 font-serif text-[1.5rem] leading-[1.15] tracking-editorial text-ink-900 md:text-[1.7rem]">
+            Quando decidir avançar.
+          </h3>
+          <p className="mt-3 text-[0.92rem] leading-relaxed text-muted-600">
+            Para acompanhar seus primeiros passos com a atenção que esse
+            momento merece, encaminho você diretamente a um especialista do
+            meu time. Mesmo método, mesmo cuidado — pensado para esse
+            estágio.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 md:col-span-6">
+          <a
+            href={WHATSAPP_TEAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-between gap-3 bg-[#25D366] px-6 py-4 text-[0.72rem] uppercase tracking-wider2 text-white transition-all duration-300 hover:bg-[#1ebe57]"
+          >
+            <span className="inline-flex items-center gap-2.5">
+              <WhatsAppIcon />
+              Falar com especialista do time
             </span>
             <span aria-hidden>→</span>
           </a>
