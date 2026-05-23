@@ -2,7 +2,8 @@ import { Resend } from "resend";
 
 /** Envelope mínimo de um lead pra notificação. */
 export type LeadEmailPayload = {
-  email: string;
+  /** Email real do lead. Pode ser ausente em leads anônimos (planejamento financeiro). */
+  email?: string | null;
   name?: string | null;
   phone?: string | null;
   message?: string | null;
@@ -60,7 +61,7 @@ function buildLeadEmailHtml(p: LeadEmailPayload): string {
             <td style="padding-top:20px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 ${row("Nome", p.name)}
-                ${row("Email", p.email)}
+                ${row("Email", p.email ?? "(não informado)")}
                 ${row("Telefone", p.phone)}
                 ${row("Mensagem", p.message)}
                 ${row("Origem", p.source)}
@@ -95,7 +96,7 @@ function buildLeadEmailText(p: LeadEmailPayload): string {
     "NOVO INTERESSE — ÁREA EXCLUSIVA",
     "",
     p.name ? `Nome: ${p.name}` : null,
-    `Email: ${p.email}`,
+    `Email: ${p.email ?? "(não informado)"}`,
     p.phone ? `Telefone: ${p.phone}` : null,
     p.message ? `Mensagem: ${p.message}` : null,
     p.source ? `Origem: ${p.source}` : null,
@@ -120,11 +121,14 @@ export async function notifyLeadByEmail(payload: LeadEmailPayload) {
 
   try {
     const resend = new Resend(apiKey);
+    const subjectIdentity = payload.name ?? payload.email ?? "novo lead";
     const { data, error } = await resend.emails.send({
       from,
       to,
-      replyTo: payload.email,
-      subject: `Novo interesse no site · ${payload.name ?? payload.email}`,
+      // Só seta reply-to se o lead deu email real (anônimo do planejamento
+      // pode entrar sem email).
+      ...(payload.email ? { replyTo: payload.email } : {}),
+      subject: `Novo interesse no site · ${subjectIdentity}`,
       html: buildLeadEmailHtml(payload),
       text: buildLeadEmailText(payload),
     });

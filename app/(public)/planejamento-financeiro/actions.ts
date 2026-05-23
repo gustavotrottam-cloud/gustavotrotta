@@ -9,6 +9,7 @@ import type { PlanningData, PlanningPlan } from "@/lib/planejamento/types";
 import { getNextStep, ACTIVE_STEPS } from "@/lib/planejamento/steps";
 import { rateLimit, getClientKey } from "@/lib/rateLimit";
 import { verifyTurnstile } from "@/lib/turnstile";
+import { notifyLeadByEmail } from "@/lib/email";
 
 /**
  * Tool é aberta ao público, então a persistência usa o admin client
@@ -249,6 +250,24 @@ export async function registerContactAndStart(input: {
       if (linkErr) {
         console.error("[registerContactAndStart] link", linkErr);
         return { ok: false, error: "Falha ao vincular plano" };
+      }
+
+      // Notifica admin por email — só pra leads NOVOS (não no caminho de update).
+      // Falha silenciosa: lead já está salvo no banco.
+      const notif = await notifyLeadByEmail({
+        email,
+        name,
+        phone,
+        source: "planejamento-financeiro",
+        createdAt: new Date().toLocaleString("pt-BR", {
+          timeZone: "America/Sao_Paulo",
+        }),
+      });
+      if (!notif.sent) {
+        console.warn(
+          "[registerContactAndStart] email notification skipped:",
+          notif.reason
+        );
       }
     }
 
