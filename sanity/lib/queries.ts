@@ -76,10 +76,15 @@ export const videosQuery = groq`*[_type == "video"] | order(publishedAt desc) {
   "category": category->{name, "slug": slug.current},
 }`;
 
-/** Categorias por área. */
+/** Categorias por área (filtragem usada na biblioteca privada). */
 export const categoriesByAreaQuery = groq`*[
   _type == "category" && (area == $area || area == "ambos")
 ] | order(displayOrder asc, name asc) {
+  _id, name, "slug": slug.current, description, area
+}`;
+
+/** Todas as categorias (usado na central pública de conteúdo). */
+export const allCategoriesQuery = groq`*[_type == "category"] | order(displayOrder asc, name asc) {
   _id, name, "slug": slug.current, description, area
 }`;
 

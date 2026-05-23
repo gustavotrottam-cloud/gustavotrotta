@@ -4,7 +4,7 @@ import Container from "@/components/Container";
 import Section from "@/components/Section";
 import ArticleCard, { type ArticleCardData } from "@/components/clientes/ArticleCard";
 import { sanityClient } from "@/sanity/lib/client";
-import { articlesQuery, categoriesByAreaQuery } from "@/sanity/lib/queries";
+import { articlesQuery, allCategoriesQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Conteúdo — Gustavo Trotta",
@@ -35,8 +35,7 @@ export default async function ConteudoPage({
   try {
     [articles, categories] = await Promise.all([
       sanityClient.fetch<ArticleCardData[]>(articlesQuery),
-      // "ambos" cobre todas as categorias com area ∈ { mercado, biblioteca, ambos }
-      sanityClient.fetch<Category[]>(categoriesByAreaQuery, { area: "ambos" }),
+      sanityClient.fetch<Category[]>(allCategoriesQuery),
     ]);
   } catch (err) {
     fetchError = err instanceof Error ? err.message : "Erro desconhecido";
