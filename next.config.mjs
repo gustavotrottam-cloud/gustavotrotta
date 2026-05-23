@@ -51,8 +51,8 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://*.supabase.co https://cdn.sanity.io https://i.ytimg.com",
       // YouTube embed (vídeos da Mídia)
       "frame-src 'self' https://www.youtube.com https://challenges.cloudflare.com",
-      // Conexões: Supabase API + Sanity + Resend (server-only mas vale listar)
-      "connect-src 'self' https://*.supabase.co https://*.sanity.io",
+      // Conexões: Supabase API + Sanity + Cloudflare Turnstile (XHR/fetch do widget)
+      "connect-src 'self' https://*.supabase.co https://*.sanity.io https://challenges.cloudflare.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
