@@ -389,44 +389,111 @@ export default async function HomePage() {
         </Container>
       </Section>
 
-      {/* ── CTA FINAL ──────────────────────────────────────────────────────── */}
+      {/* ── CTA FINAL — três portas com hierarquia de comprometimento ────── */}
       <Section className="bg-navy-900 text-paper-100">
         <Container>
-          <div className="grid items-end gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <Reveal>
-                <div className="text-[0.7rem] uppercase tracking-wider3 text-paper-100/60">
-                  Próximo passo
+          {/* Texto âncora */}
+          <div className="max-w-3xl">
+            <Reveal>
+              <div className="text-[0.7rem] uppercase tracking-wider3 text-paper-100/60">
+                Próximos passos
+              </div>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="mt-6 font-serif text-4xl leading-[1.04] tracking-editorial md:text-[3.4rem]">
+                Três formas de começar —{" "}
+                <span className="italic text-gold-400">sem compromisso.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-prose2 text-[1.02rem] leading-relaxed text-paper-100/75">
+                Acompanhe de longe, experimente a ferramenta ou abra uma
+                conversa. Cada caminho é uma porta diferente — você escolhe
+                o ritmo.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* 3 portas com peso visual crescente (frio → quente) */}
+          <div className="mt-16 grid gap-6 md:grid-cols-3 md:gap-7">
+            {/* Frio — acompanhar (LinkedIn por ora; Wave 2 troca por newsletter) */}
+            <Reveal delay={0.15}>
+              <a
+                href="https://www.linkedin.com/in/gustavo-trotta/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col justify-between border border-paper-100/20 bg-paper-100/[0.02] p-8 transition-all duration-300 hover:border-paper-100/40 hover:bg-paper-100/[0.05]"
+              >
+                <div>
+                  <div className="text-[0.65rem] uppercase tracking-wider3 text-gold-400">
+                    Acompanhar
+                  </div>
+                  <h3 className="mt-5 font-serif text-[1.6rem] leading-[1.12] tracking-editorial text-paper-100">
+                    Análises semanais no LinkedIn.
+                  </h3>
+                  <p className="mt-4 text-[0.9rem] leading-relaxed text-paper-100/65">
+                    Leitura de cenário, comentário sobre decisões de mercado
+                    e reflexões patrimoniais — sem cadastro.
+                  </p>
                 </div>
-              </Reveal>
-              <Reveal delay={0.05}>
-                <h2 className="mt-6 font-serif text-4xl leading-[1.04] tracking-editorial md:text-[3.6rem]">
-                  Uma conversa, sem compromisso,
-                  <br />
-                  para entender <span className="italic text-gold-400">se faz sentido.</span>
-                </h2>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p className="mt-6 max-w-prose2 text-[1.02rem] leading-relaxed text-paper-100/75">
-                  A primeira conversa é uma leitura honesta do seu cenário
-                  atual — objetivos, estrutura, pontos cegos. Se houver
-                  encaixe, seguimos. Se não, você sai com clareza mesmo assim.
-                </p>
-              </Reveal>
-            </div>
-            <div className="lg:col-span-4 lg:text-right">
-              <Reveal delay={0.15}>
-                <a
-                  href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20gostaria%20de%20agendar%20uma%20conversa."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-paper-100 px-8 py-5 text-[0.72rem] uppercase tracking-wider2 text-ink-900 transition-all hover:bg-gold-400"
-                >
-                  Agendar conversa
+                <div className="mt-8 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-paper-100 underline-offset-8 group-hover:underline">
+                  Seguir no LinkedIn
                   <span aria-hidden>→</span>
-                </a>
-              </Reveal>
-            </div>
+                </div>
+              </a>
+            </Reveal>
+
+            {/* Morno — ferramenta gratuita */}
+            <Reveal delay={0.22}>
+              <Link
+                href="/planejamento-financeiro"
+                className="group flex h-full flex-col justify-between border border-paper-100/30 bg-paper-100/[0.04] p-8 transition-all duration-300 hover:border-gold-400/70 hover:bg-paper-100/[0.07]"
+              >
+                <div>
+                  <div className="text-[0.65rem] uppercase tracking-wider3 text-gold-400">
+                    Ferramenta gratuita
+                  </div>
+                  <h3 className="mt-5 font-serif text-[1.6rem] leading-[1.12] tracking-editorial text-paper-100">
+                    Planejamento Financeiro em 6 minutos.
+                  </h3>
+                  <p className="mt-4 text-[0.9rem] leading-relaxed text-paper-100/65">
+                    Desenhe seu cenário e receba uma projeção patrimonial com
+                    idade de independência e PDF editorial.
+                  </p>
+                </div>
+                <div className="mt-8 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-gold-400 underline-offset-8 group-hover:underline">
+                  Iniciar agora
+                  <span aria-hidden>→</span>
+                </div>
+              </Link>
+            </Reveal>
+
+            {/* Quente — conversa direta */}
+            <Reveal delay={0.29}>
+              <a
+                href="https://wa.me/5511932212045?text=Ol%C3%A1%20Gustavo%2C%20gostaria%20de%20agendar%20uma%20conversa."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col justify-between bg-paper-100 p-8 text-ink-900 transition-all duration-300 hover:bg-gold-400"
+              >
+                <div>
+                  <div className="text-[0.65rem] uppercase tracking-wider3 text-navy-800">
+                    Conversa direta
+                  </div>
+                  <h3 className="mt-5 font-serif text-[1.6rem] leading-[1.12] tracking-editorial text-ink-900">
+                    Agendar reunião pessoalmente.
+                  </h3>
+                  <p className="mt-4 text-[0.9rem] leading-relaxed text-muted-600">
+                    Uma leitura honesta do seu cenário atual. Se houver
+                    encaixe, seguimos. Se não, você sai com clareza.
+                  </p>
+                </div>
+                <div className="mt-8 inline-flex items-center gap-2 text-[0.7rem] uppercase tracking-wider2 text-ink-900 underline-offset-8 group-hover:underline">
+                  Conversar agora
+                  <span aria-hidden>→</span>
+                </div>
+              </a>
+            </Reveal>
           </div>
         </Container>
       </Section>
