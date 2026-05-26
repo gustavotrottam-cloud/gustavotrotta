@@ -10,6 +10,7 @@ import MediaLogosStrip from "@/components/MediaLogosStrip";
 import InstitutionalBanner from "@/components/InstitutionalBanner";
 import Recognitions from "@/components/Recognitions";
 import ComoEuPenso from "@/components/ComoEuPenso";
+import EmCirculacao from "@/components/EmCirculacao";
 import { youtubeChannelUrl } from "@/lib/media";
 import { sanityClient } from "@/sanity/lib/client";
 import { articlesQuery } from "@/sanity/lib/queries";
@@ -343,74 +344,8 @@ export default async function HomePage() {
         </Container>
       </Section>
 
-      {/* ── CONTEÚDO EM DESTAQUE ──────────────────────────────────────────── */}
-      <Section id="conteudo">
-        <Container>
-          <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-            <SectionHeading
-              eyebrow="Central de conteúdo"
-              title={
-                <>
-                  Leitura de cenário e <span className="italic text-navy-800">educação aplicada.</span>
-                </>
-              }
-              intro="Análises, artigos e materiais que circulam entre clientes e em mídia especializada. Nada de ruído — apenas o que sustenta uma decisão melhor."
-            />
-            <Reveal delay={0.15}>
-              <Link
-                href="/conteudo"
-                className="shrink-0 self-start text-[0.78rem] uppercase tracking-wider2 text-ink-900 underline-offset-8 hover:underline md:self-end"
-              >
-                Ver todos os conteúdos →
-              </Link>
-            </Reveal>
-          </div>
-
-          {featuredArticles.length > 0 ? (
-            <div className="mt-16 grid gap-8 md:grid-cols-3">
-              {featuredArticles.map((article, i) => (
-                <Reveal key={article._id} delay={i * 0.08}>
-                  <Link
-                    href={`/conteudo/${article.slug.current}`}
-                    className="group block h-full"
-                  >
-                    <article className="flex h-full flex-col border-t border-ink-900/15 pt-8 transition-all duration-500 group-hover:border-ink-900/40">
-                      <div className="text-[0.7rem] uppercase tracking-wider2 text-gold-600">
-                        {article.category?.name ?? "Conteúdo"}
-                      </div>
-                      <h3 className="mt-5 font-serif text-[1.55rem] leading-[1.15] tracking-editorial text-ink-900 transition-colors group-hover:text-navy-800">
-                        {article.title}
-                      </h3>
-                      <p className="mt-4 text-[0.95rem] leading-relaxed text-muted-600">
-                        {article.excerpt}
-                      </p>
-                      <div className="mt-auto pt-8 text-[0.72rem] uppercase tracking-wider2 text-muted-500">
-                        {article.readingTimeMin
-                          ? `Leitura · ${article.readingTimeMin} min`
-                          : "Ler artigo →"}
-                      </div>
-                    </article>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          ) : (
-            <Reveal>
-              <div className="mt-16 border border-ink-900/10 bg-paper-200/40 px-8 py-12 text-center md:px-16">
-                <p className="font-serif text-[1.4rem] leading-relaxed text-ink-900">
-                  Acompanhe os próximos materiais na central de conteúdo.
-                </p>
-                <Link
-                  href="/conteudo"
-                  className="mt-6 inline-flex items-center gap-3 border border-ink-900 px-6 py-3 text-[0.72rem] uppercase tracking-wider2 text-ink-900 transition-all duration-300 hover:bg-ink-900 hover:text-paper-50"
-                >
-                  Acessar central →
-                </Link>
-              </div>
-            </Reveal>
-          )}
-        </Container>
-      </Section>
+      {/* ── EM CIRCULAÇÃO — leitura semanal · Instagram · LinkedIn ───────── */}
+      <EmCirculacao articles={featuredArticles} />
 
       {/* ── MÍDIA / AUTORIDADE ─────────────────────────────────────────────── */}
       <Section id="midia" className="bg-paper-200/60">

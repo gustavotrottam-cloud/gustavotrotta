@@ -8,7 +8,7 @@ const links = [
   { href: "/#como-penso", label: "Como penso" },
   { href: "/sobre", label: "Sobre" },
   { href: "/#areas", label: "Áreas" },
-  { href: "/conteudo", label: "Conteúdo" },
+  { href: "/#em-circulacao", label: "Em circulação" },
   { href: "/#midia", label: "Mídia" },
 ];
 
