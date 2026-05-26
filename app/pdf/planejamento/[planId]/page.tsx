@@ -17,6 +17,7 @@ import { formatBRL, formatBRLShort } from "@/lib/planejamento/format";
 import type { PlanningPlan } from "@/lib/planejamento/types";
 import { resolveCtaFlow } from "@/lib/planejamento/cta-rules";
 import PdfWealthChart from "@/components/pdf/PdfWealthChart";
+import PdfPatrimonyBreakdown from "@/components/pdf/PdfPatrimonyBreakdown";
 
 export const dynamic = "force-dynamic";
 
@@ -267,7 +268,37 @@ export default async function PdfPlanejamentoPage({
           O ponto de <span className="italic-navy">partida</span>.
         </h1>
 
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 16 }}>
+          <h3 className="pdf-h3">Composição do patrimônio</h3>
+          <div style={{ marginTop: 6 }}>
+            <PdfPatrimonyBreakdown
+              financial={financialTotal}
+              realAssets={realAssetsTotal}
+              ownership={ownershipTotal}
+            />
+          </div>
+          <p
+            className="pdf-prose"
+            style={{ marginTop: 6, fontSize: "9pt", color: "#6B6B70" }}
+          >
+            A projeção de renda passiva considera{" "}
+            <strong style={{ color: "#101014" }}>
+              apenas o patrimônio financeiro
+            </strong>{" "}
+            — capital já investido e produzindo retorno. Imobilizado e
+            societário entram aqui como contexto patrimonial.
+            {(realAssetsTotal > 0 || ownershipTotal > 0) && (
+              <>
+                {" "}
+                A conversão futura de parte desses ativos em caixa — venda de
+                imóvel, exit da empresa — <em>acelera bruscamente</em> a
+                construção da renda passiva.
+              </>
+            )}
+          </p>
+        </div>
+
+        <div style={{ marginTop: 16 }}>
           <h3 className="pdf-h3">Sobre você</h3>
           <table className="pdf-table" style={{ marginTop: 6 }}>
             <tbody>
@@ -375,13 +406,13 @@ export default async function PdfPlanejamentoPage({
               </tr>
               <tr>
                 <td style={{ color: "#6B6B70", fontSize: "9pt" }}>
-                  Patrimônio investível (usado na projeção)
+                  Patrimônio considerado na projeção (só financeiro)
                 </td>
                 <td
                   className="right"
                   style={{ color: "#6B6B70", fontSize: "9pt" }}
                 >
-                  {formatBRL(financialTotal + ownershipTotal)}
+                  {formatBRL(financialTotal)}
                 </td>
               </tr>
             </tbody>

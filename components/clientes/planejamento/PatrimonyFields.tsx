@@ -141,7 +141,7 @@ export default function PatrimonyFields({
         <>
           <FieldGroup
             label="Valor econômico estimado das participações"
-            hint="Estimativa realista do valor de venda hoje. Conservador é melhor que otimista neste campo."
+            hint="Informe apenas a sua parte — não o valuation total da empresa. Exemplo: se a empresa vale R$ 5 mi e você detém 50%, o valor a registrar é R$ 2,5 mi. Estimativa realista do valor de venda hoje; conservador é melhor que otimista."
           >
             <CurrencyField
               name="ownershipTotalBRL"

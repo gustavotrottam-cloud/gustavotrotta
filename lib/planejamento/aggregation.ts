@@ -50,12 +50,14 @@ export function getOwnershipTotal(patrimony: PlanningData["patrimony"]): number 
 }
 
 /**
- * Patrimônio total líquido considerado pra projeção.
- * Por padrão inclui só financeiro + societário (são realizáveis).
- * Ativos imobilizados ficam fora — moradia e veículos não geram renda passiva.
+ * Patrimônio considerado pra projeção de renda passiva.
+ * Apenas financeiro líquido — capital que já está investido e gerando retorno.
+ * Imobilizado e societário ficam de fora: imóveis e veículos não rendem caixa;
+ * participação societária só vira renda passiva se houver exit/venda futura.
+ * Esses dois entram no "Patrimônio total" apenas como contexto patrimonial.
  */
 export function getInvestablePatrimony(patrimony: PlanningData["patrimony"]): number {
-  return getFinancialTotal(patrimony) + getOwnershipTotal(patrimony);
+  return getFinancialTotal(patrimony);
 }
 
 export function getTotalPatrimony(patrimony: PlanningData["patrimony"]): number {

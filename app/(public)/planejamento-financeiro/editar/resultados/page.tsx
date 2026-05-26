@@ -5,6 +5,7 @@ import StepShell from "@/components/clientes/planejamento/StepShell";
 import StatCard from "@/components/clientes/planejamento/StatCard";
 import WealthChart from "@/components/clientes/planejamento/WealthChart";
 import IncomeComparison from "@/components/clientes/planejamento/IncomeComparison";
+import PatrimonyBreakdown from "@/components/clientes/planejamento/PatrimonyBreakdown";
 import PdfDownloadButton from "@/components/clientes/planejamento/PdfDownloadButton";
 import OpenAccountButtons from "@/components/clientes/planejamento/OpenAccountButtons";
 import { computeFromData } from "@/lib/planejamento/engine";
@@ -12,6 +13,8 @@ import {
   isReadyForProjection,
   getMonthlySavings,
   getFinancialTotal,
+  getRealAssetsTotal,
+  getOwnershipTotal,
 } from "@/lib/planejamento/aggregation";
 import { formatBRL, formatBRLShort } from "@/lib/planejamento/format";
 import { getPreviousStep, ACTIVE_STEPS } from "@/lib/planejamento/steps";
@@ -75,6 +78,8 @@ export default async function ResultadosPage() {
 
   const monthlySavings = getMonthlySavings(plan.data.cashflow);
   const financialPatrimony = getFinancialTotal(plan.data.patrimony);
+  const realAssetsPatrimony = getRealAssetsTotal(plan.data.patrimony);
+  const ownershipPatrimony = getOwnershipTotal(plan.data.patrimony);
   const ifAge = feasibility.estimatedIFAge;
   const gap = feasibility.gapPerpetualBRL;
   const isFeasible = gap >= 0;
@@ -107,6 +112,15 @@ export default async function ResultadosPage() {
       {/* CTAs — abertura de conta (≥300k) OU handoff pro time (<300k) */}
       <div className="mb-10">
         <OpenAccountButtons financialPatrimony={financialPatrimony} />
+      </div>
+
+      {/* Patrimônio total — pizza + breakdown + nota sobre cálculo */}
+      <div className="mb-12">
+        <PatrimonyBreakdown
+          financial={financialPatrimony}
+          realAssets={realAssetsPatrimony}
+          ownership={ownershipPatrimony}
+        />
       </div>
 
       {/* Stats principais */}
