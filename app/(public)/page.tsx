@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
 import Portrait from "@/components/Portrait";
 import MediaGrid from "@/components/MediaGrid";
+import MediaSpotlight from "@/components/MediaSpotlight";
 import MediaLogosStrip from "@/components/MediaLogosStrip";
 import InstitutionalBanner from "@/components/InstitutionalBanner";
 import Recognitions from "@/components/Recognitions";
@@ -436,8 +437,19 @@ export default async function HomePage() {
             </Reveal>
           </div>
 
+          {/* Vídeo principal embedado + 3 cards secundários */}
           <div className="mt-16">
-            <MediaGrid />
+            <MediaSpotlight />
+          </div>
+
+          {/* Demais aparições (excluindo as 4 do spotlight) */}
+          <div className="mt-24 border-t border-ink-900/10 pt-16">
+            <Reveal>
+              <div className="mb-12 text-[0.7rem] uppercase tracking-wider3 text-muted-500">
+                Arquivo de aparições
+              </div>
+            </Reveal>
+            <MediaGrid skipFirst={4} />
           </div>
         </Container>
       </Section>

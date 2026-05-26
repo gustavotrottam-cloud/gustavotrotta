@@ -7,6 +7,9 @@ export type MediaItem = {
   channel: string;
   /** Program / segment, when meaningful (Money News, Giro do Mercado, etc.) */
   program?: string;
+  /** Editorial context — short sentence framing the appearance (theme + date).
+   *  Ex: "Sobre o ciclo de juros americano, mar/2025." */
+  context?: string;
 };
 
 /**
@@ -19,24 +22,28 @@ export const mediaItems: MediaItem[] = [
     title: "Tesouro Reserva compete com as 'caixinhas', diz especialista",
     channel: "CNN Brasil Money",
     program: "Money News",
+    context: "Sobre a nova classe de produtos de liquidez do Tesouro Direto.",
   },
   {
     id: "AA53LT4xdD8",
     title: "As perspectivas para o mercado e a política de juros",
     channel: "Jovem Pan News",
     program: "Economia em Foco",
+    context: "Sobre o ciclo de afrouxamento monetário e o efeito sobre alocações.",
   },
   {
     id: "Xqkrxsh15bQ",
     title: "Abertura de Ormuz traz alívio momentâneo, diz especialista",
     channel: "CNN Brasil Money",
     program: "Money News",
+    context: "Sobre os impactos geopolíticos no preço do petróleo e nos mercados.",
   },
   {
     id: "VUXwo-k8-uI",
     title: "Mercado espera pronunciamento de Trump",
     channel: "CNN Brasil Money",
     program: "Money News",
+    context: "Sobre a leitura dos investidores na reabertura da administração americana.",
   },
   {
     id: "KSOZ7bRJB3A",

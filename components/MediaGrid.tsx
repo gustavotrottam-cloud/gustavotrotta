@@ -6,10 +6,17 @@ import {
 } from "@/lib/media";
 import Reveal from "./Reveal";
 
-export default function MediaGrid() {
+/**
+ * MediaGrid — grade completa de aparições.
+ * `skipFirst` permite excluir os N primeiros (usado quando MediaSpotlight
+ * já os destaca acima e queremos evitar duplicação).
+ */
+export default function MediaGrid({ skipFirst = 0 }: { skipFirst?: number } = {}) {
+  const items = skipFirst > 0 ? mediaItems.slice(skipFirst) : mediaItems;
+  if (items.length === 0) return null;
   return (
     <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-      {mediaItems.map((item, i) => (
+      {items.map((item, i) => (
         <Reveal key={item.id} delay={(i % 3) * 0.08}>
           <a
             href={youtubeWatchUrl(item.id)}
