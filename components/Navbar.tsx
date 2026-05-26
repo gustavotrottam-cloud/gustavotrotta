@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Container from "./Container";
 
 const links = [
-  { href: "/#como-penso", label: "Como penso" },
+  { href: "/#filosofia", label: "Filosofia" },
   { href: "/sobre", label: "Sobre" },
   { href: "/#areas", label: "Áreas" },
   { href: "/conteudo", label: "Conteúdo" },

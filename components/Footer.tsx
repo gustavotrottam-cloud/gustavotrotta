@@ -33,8 +33,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#como-penso" className="hover:text-ink-900 transition-colors">
-                  Como penso
+                <Link href="/#filosofia" className="hover:text-ink-900 transition-colors">
+                  Filosofia
                 </Link>
               </li>
               <li>

@@ -9,7 +9,6 @@ import MediaSpotlight from "@/components/MediaSpotlight";
 import MediaLogosStrip from "@/components/MediaLogosStrip";
 import InstitutionalBanner from "@/components/InstitutionalBanner";
 import Recognitions from "@/components/Recognitions";
-import ComoEuPenso from "@/components/ComoEuPenso";
 import { youtubeChannelUrl } from "@/lib/media";
 import { sanityClient } from "@/sanity/lib/client";
 import { articlesQuery } from "@/sanity/lib/queries";
@@ -25,6 +24,29 @@ type HomeArticle = {
   readingTimeMin?: number;
   category?: { name: string; slug: string };
 };
+
+const pillars = [
+  {
+    n: "01",
+    title: "Estratégia antes de produto",
+    body: "Toda alocação parte de objetivos, horizonte e tolerância — não de tendências de mercado. O produto é consequência da estratégia, nunca o ponto de partida.",
+  },
+  {
+    n: "02",
+    title: "Visão de longo prazo",
+    body: "Decisões financeiras são compostas no tempo. Construímos um plano que sobrevive a ciclos, mudanças de juros e a inevitável volatilidade dos mercados.",
+  },
+  {
+    n: "03",
+    title: "Clareza acima de complexidade",
+    body: "Estruturas sofisticadas só fazem sentido quando podem ser explicadas. O cliente sai de cada conversa entendendo exatamente o que possui e por quê.",
+  },
+  {
+    n: "04",
+    title: "Acompanhamento próximo",
+    body: "Patrimônio se constrói em décadas; relacionamento, em conversas regulares. Cada cliente tem uma cadência clara de revisões, ajustes e leitura de cenário.",
+  },
+];
 
 const areas = [
   {
@@ -240,8 +262,40 @@ export default async function HomePage() {
         </Container>
       </Section>
 
-      {/* ── COMO EU PENSO (manifesto + 4 princípios + "O que eu não faço") ─ */}
-      <ComoEuPenso />
+      {/* ── FILOSOFIA ──────────────────────────────────────────────────────── */}
+      <Section id="filosofia" className="bg-paper-200/60">
+        <Container>
+          <SectionHeading
+            eyebrow="Filosofia"
+            title={
+              <>
+                Quatro princípios que sustentam <span className="italic text-navy-800">cada decisão</span>.
+              </>
+            }
+            intro="Não trabalhamos por tese de curto prazo nem por produto da semana. Cada estratégia parte dos mesmos quatro pontos — independentemente do perfil de cliente, do tamanho do patrimônio ou do momento do mercado."
+          />
+
+          <div className="mt-20 grid gap-x-12 gap-y-16 md:grid-cols-2">
+            {pillars.map((p, i) => (
+              <Reveal key={p.n} delay={i * 0.06}>
+                <div className="flex gap-8">
+                  <div className="shrink-0 font-serif text-[1.6rem] text-gold-500">
+                    {p.n}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl tracking-editorial text-ink-900 md:text-[1.7rem]">
+                      {p.title}
+                    </h3>
+                    <p className="mt-4 text-[0.98rem] leading-relaxed text-muted-600">
+                      {p.body}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </Section>
 
       {/* ── SOBRE (resumo) ─────────────────────────────────────────────────── */}
       <Section>
