@@ -12,6 +12,7 @@ export default function robots(): MetadataRoute.Robots {
           "/clientes/",
           "/api/",
           "/pdf/",
+          "/politica-de-privacidade/excluir-dados",
         ],
       },
     ],

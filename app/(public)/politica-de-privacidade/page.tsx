@@ -231,6 +231,18 @@ export default function PoliticaDePrivacidadePage() {
                 com o assunto <strong>"LGPD — solicitação de titular"</strong>.
                 Responderemos em até 15 dias.
               </p>
+              <p className="mt-4 text-[0.92rem] text-muted-600">
+                Para o direito específico de <strong>exclusão imediata</strong>
+                {" "}dos seus dados, oferecemos um{" "}
+                <a
+                  href="/politica-de-privacidade/excluir-dados"
+                  className="text-ink-700 underline underline-offset-2 hover:text-gold-600"
+                >
+                  caminho automatizado
+                </a>
+                {" "}que executa a exclusão em minutos após confirmação por
+                email.
+              </p>
             </section>
 
             {/* Cookies */}
