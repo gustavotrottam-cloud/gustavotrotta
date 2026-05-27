@@ -1,5 +1,3 @@
-import { YoutubeTranscript } from "youtube-transcript";
-
 /** Extrai o ID de um vídeo YouTube em URLs como:
  *  - https://youtu.be/VIDEO_ID
  *  - https://youtu.be/VIDEO_ID?si=...
@@ -39,36 +37,87 @@ export type TranscriptResult = {
   lang: string;
 };
 
-/** Tenta puxar a transcrição preferindo PT-BR, com fallback. */
+type SupadataChunk = {
+  text: string;
+  offset: number;
+  duration: number;
+  lang?: string;
+};
+
+type SupadataResponse = {
+  content: SupadataChunk[];
+  lang: string;
+  availableLangs?: string[];
+};
+
+const SUPADATA_ENDPOINT = "https://api.supadata.ai/v1/youtube/transcript";
+
+/**
+ * Puxa transcrição via Supadata API (https://supadata.ai).
+ *
+ * Por que não `youtube-transcript`: YouTube bloqueia IPs de datacenter
+ * (Vercel, AWS, etc) com "Sign in to confirm you're not a bot". Supadata
+ * usa proxies residenciais e funciona consistentemente em produção.
+ *
+ * Free tier: 100 transcripts/mês (mais que suficiente pro ritmo do site).
+ *
+ * Estratégia: tenta primeiro `lang=pt` (Supadata trata como prefixo, aceita
+ * pt/pt-BR/pt-PT). Se vídeo não tiver caption em português, fallback pra
+ * qualquer idioma disponível.
+ */
 export async function fetchTranscriptForVideo(
   videoId: string
 ): Promise<TranscriptResult> {
-  const tryLangs: Array<string | undefined> = [
-    "pt",
-    "pt-BR",
-    "pt-PT",
-    undefined,
-  ];
+  const apiKey = process.env.SUPADATA_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      "SUPADATA_API_KEY não configurada. Crie em https://dash.supadata.ai/organizations/api-key e adicione no .env.local + Vercel."
+    );
+  }
+
+  const attempts: Array<string | null> = ["pt", null];
   let lastErr: unknown = null;
-  for (const lang of tryLangs) {
+
+  for (const lang of attempts) {
     try {
-      const opts = lang ? { lang } : {};
-      const transcript = await YoutubeTranscript.fetchTranscript(videoId, opts);
-      if (!transcript || transcript.length === 0) continue;
-      const last = transcript[transcript.length - 1];
+      const params = new URLSearchParams({ videoId, text: "false" });
+      if (lang) params.set("lang", lang);
+
+      const resp = await fetch(`${SUPADATA_ENDPOINT}?${params.toString()}`, {
+        headers: { "x-api-key": apiKey },
+      });
+
+      if (!resp.ok) {
+        const body = await resp.text();
+        lastErr = new Error(
+          `Supadata ${resp.status}: ${body.slice(0, 300)}`
+        );
+        continue;
+      }
+
+      const data = (await resp.json()) as SupadataResponse;
+      if (!data.content || data.content.length === 0) {
+        lastErr = new Error(
+          `Supadata retornou content vazio (lang=${lang ?? "auto"})`
+        );
+        continue;
+      }
+
+      const last = data.content[data.content.length - 1];
       const durationSec = Math.round((last.offset + last.duration) / 1000);
       return {
-        text: transcript.map((c) => c.text).join(" "),
+        text: data.content.map((c) => c.text).join(" "),
         durationSec,
-        chunkCount: transcript.length,
-        lang: lang ?? "auto",
+        chunkCount: data.content.length,
+        lang: data.lang ?? lang ?? "auto",
       };
     } catch (err) {
       lastErr = err;
     }
   }
+
   throw new Error(
-    `Não consegui puxar transcrição (tentei pt, pt-BR, pt-PT, auto). Último erro: ${
+    `Não consegui puxar transcrição via Supadata. Último erro: ${
       lastErr instanceof Error ? lastErr.message : String(lastErr)
     }`
   );

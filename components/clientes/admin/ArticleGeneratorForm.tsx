@@ -20,7 +20,7 @@ const TABS: Array<{ id: Mode; label: string; hint: string }> = [
   {
     id: "url",
     label: "Link YouTube",
-    hint: "Tenta puxar a transcrição automaticamente. Funciona em vídeos com IP residencial; em produção (Vercel) costuma falhar — use Áudio ou Transcrição se der erro.",
+    hint: "Cole a URL — a transcrição é extraída automaticamente via Supadata e o artigo gerado em ~1 min. Caminho mais rápido para a maioria dos vídeos.",
   },
   {
     id: "audio",
@@ -309,10 +309,9 @@ export default function ArticleGeneratorForm() {
           </p>
           {mode === "url" && (
             <p className="mt-3 text-[0.85rem] text-muted-700">
-              Dica: o caminho "Link YouTube" costuma falhar em produção porque
-              o YouTube bloqueia IPs da Vercel. Tenta o caminho{" "}
-              <strong>Áudio</strong> (upload) ou <strong>Transcrição</strong>{" "}
-              (paste) acima.
+              Dica: se o vídeo não tem legenda disponível (CC), a Supadata
+              não consegue extrair. Use <strong>Áudio</strong> (upload mp3)
+              ou <strong>Transcrição</strong> (cole o texto) acima.
             </p>
           )}
           <button

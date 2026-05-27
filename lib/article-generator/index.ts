@@ -36,9 +36,10 @@ export type GenerateFromTranscriptOptions = CommonCreds & {
 };
 
 /**
- * Caminho 1: URL do YouTube → tenta `youtube-transcript`.
- * Funciona em local sempre. Em produção (Vercel) falha quase sempre por
- * IP fingerprinting do YouTube em datacenters. Mantido como atalho rápido.
+ * Caminho 1: URL do YouTube → Supadata API extrai a transcrição.
+ * Funciona em qualquer ambiente (Supadata usa proxies residenciais que
+ * passam pelo IP fingerprinting do YouTube). Free tier: 100 vídeos/mês.
+ * Requer `SUPADATA_API_KEY` no env.
  */
 export async function generateFromYoutubeUrl(
   opts: GenerateFromUrlOptions
